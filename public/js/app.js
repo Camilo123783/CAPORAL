@@ -36,9 +36,7 @@
   const btnPhaseToggle = document.getElementById('btnPhaseToggle');
   const phaseIcon = document.getElementById('phaseIcon');
   const phaseLabel = document.getElementById('phaseLabel');
-  const currentClock = document.getElementById('currentClock');
-  const phaseScheduleTag = document.getElementById('phaseScheduleTag');
-  const btnQuickSwitchPhase = document.getElementById('btnQuickSwitchPhase');
+  const phaseNextLabel = document.getElementById('phaseNextLabel');
 
   const btnUserProfile = document.getElementById('btnUserProfile');
   const userAvatar = document.getElementById('userAvatar');
@@ -88,7 +86,6 @@
   // Modals
   const checkoutModal = document.getElementById('checkoutModal');
   const userProfileModal = document.getElementById('userProfileModal');
-  const phaseControlModal = document.getElementById('phaseControlModal');
   const salesModal = document.getElementById('salesModal');
   const resetAllConfirmModal = document.getElementById('resetAllConfirmModal');
 
@@ -153,14 +150,6 @@
     return '$' + Number(num || 0).toLocaleString('es-CO');
   }
 
-  // Update Clock
-  function updateLiveClock() {
-    const now = new Date();
-    currentClock.textContent = now.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
-  }
-  setInterval(updateLiveClock, 1000);
-  updateLiveClock();
-
   // ==========================================================================
   // Socket.IO Events
   // ==========================================================================
@@ -170,7 +159,6 @@
     menu = data.menu || { desayuno: [], almuerzo: [] };
     users = data.users || [];
     currentPhase = data.currentPhase || 'almuerzo';
-    phaseMode = data.phaseMode || 'auto';
     outOfStock = data.outOfStock || [];
 
     setupCurrentUser();
@@ -184,19 +172,9 @@
 
   socket.on('phase-changed', (data) => {
     currentPhase = data.currentPhase;
-    phaseMode = data.phaseMode;
     applyPhaseTheme(currentPhase);
     renderMenuCatalog();
-    showToast(`⏰ Menú cambiado a: ${currentPhase.toUpperCase()}`);
-  });
-
-  socket.on('phase-tick', (data) => {
-    if (data.currentPhase !== currentPhase) {
-      currentPhase = data.currentPhase;
-      applyPhaseTheme(currentPhase);
-      renderMenuCatalog();
-      showToast(`⏰ Cambio automático por horario: ${currentPhase.toUpperCase()}`);
-    }
+    showToast(`🍽️ Menú cambiado a: ${currentPhase.toUpperCase()}`);
   });
 
   socket.on('table-updated', (updatedTable) => {
@@ -231,16 +209,27 @@
     if (data.tables) {
       tables = data.tables;
       renderTablesView();
-      if (activeTable) {
-        activeTable = null;
-        switchView('tables');
+      if (activeTableId) {
+        activeTableId = null;
+        viewOrderDetail.style.display = 'none';
+        viewTables.style.display = 'block';
+        btnHeaderBack.style.display = 'none';
+        headerTableTitle.textContent = 'Comandas en vivo';
       }
       if (salesModal && salesModal.classList.contains('open')) {
         openSalesModal();
       }
-      showToast(`🔄 Todas las mesas y cuentas del día fueron reiniciadas por ${escapeHtml(data.resetBy || 'Camilo')}`);
-      playBeep(650);
     }
+    if (Array.isArray(data.outOfStock)) {
+      outOfStock = data.outOfStock;
+      updateOutOfStockCountBadge();
+      renderMenuCatalog();
+      if (outOfStockModal && outOfStockModal.classList.contains('open')) {
+        renderOutOfStockModalList();
+      }
+    }
+    showToast(`🔄 Cuentas, mesas y disponibilidad de productos restablecidos por ${escapeHtml(data.resetBy || 'Camilo')}`);
+    playBeep(650);
   });
 
   // ==========================================================================
@@ -329,71 +318,39 @@
   // ==========================================================================
 
   function applyPhaseTheme(phase) {
+    activeCategory = 'ALL';
+    searchQuery = '';
+    if (menuSearchInput) menuSearchInput.value = '';
+    if (btnClearMenuSearch) btnClearMenuSearch.style.display = 'none';
+
     if (phase === 'desayuno') {
       bodyEl.className = 'phase-desayuno';
       phaseIcon.textContent = '☕';
       phaseLabel.textContent = 'Desayuno';
-      phaseScheduleTag.textContent = 'Desayuno (9:00 AM - 12:00 PM)';
-      btnQuickSwitchPhase.textContent = 'Cambiar a Almuerzo 🥩';
-      catalogPhaseBadge.textContent = 'Menú Desayuno (Fondo Negro)';
+      if (phaseNextLabel) phaseNextLabel.textContent = 'Almuerzo 🥩';
+      catalogPhaseBadge.textContent = 'Carta de Desayuno';
     } else {
       bodyEl.className = 'phase-almuerzo';
       phaseIcon.textContent = '🥩';
       phaseLabel.textContent = 'Almuerzo';
-      phaseScheduleTag.textContent = 'Almuerzo (12:00 PM - 5:00 PM)';
-      btnQuickSwitchPhase.textContent = 'Cambiar a Desayuno ☀️';
-      catalogPhaseBadge.textContent = 'Menú Almuerzo (Fondo Claro/Parrilla)';
-    }
-
-    const btnD = document.getElementById('btnChooseDesayuno');
-    const btnA = document.getElementById('btnChooseAlmuerzo');
-    if (btnD && btnA) {
-      btnD.classList.toggle('active', phase === 'desayuno');
-      btnA.classList.toggle('active', phase === 'almuerzo');
+      if (phaseNextLabel) phaseNextLabel.textContent = 'Desayuno ☀️';
+      catalogPhaseBadge.textContent = 'Carta de Almuerzo';
     }
   }
 
-  btnQuickSwitchPhase.addEventListener('click', () => {
-    vibrate(25);
-    const target = currentPhase === 'desayuno' ? 'almuerzo' : 'desayuno';
-    switchPhase('manual', target);
-  });
-
+  // 1 Solo Clic para alternar fase de menú (Desayuno <-> Almuerzo)
   btnPhaseToggle.addEventListener('click', () => {
-    phaseControlModal.classList.add('open');
-    document.getElementById('toggleAutoPhase').checked = (phaseMode === 'auto');
+    vibrate(30);
+    playBeep(650);
+    const target = (currentPhase === 'desayuno') ? 'almuerzo' : 'desayuno';
+    switchPhase(target);
   });
 
-  document.getElementById('btnClosePhaseModal').addEventListener('click', () => {
-    phaseControlModal.classList.remove('open');
-  });
-
-  document.getElementById('btnChooseDesayuno').addEventListener('click', () => {
-    vibrate(25);
-    switchPhase('manual', 'desayuno');
-    phaseControlModal.classList.remove('open');
-  });
-
-  document.getElementById('btnChooseAlmuerzo').addEventListener('click', () => {
-    vibrate(25);
-    switchPhase('manual', 'almuerzo');
-    phaseControlModal.classList.remove('open');
-  });
-
-  document.getElementById('toggleAutoPhase').addEventListener('change', (e) => {
-    vibrate(25);
-    if (e.target.checked) {
-      switchPhase('auto');
-    } else {
-      switchPhase('manual', currentPhase);
-    }
-  });
-
-  function switchPhase(mode, phase) {
+  function switchPhase(phase) {
     fetch('/api/phase', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mode, phase })
+      body: JSON.stringify({ phase })
     }).catch(err => console.error(err));
   }
 
@@ -518,6 +475,10 @@
     vibrate(30);
     playBeep(600);
     activeTableId = tableId;
+    activeCategory = 'ALL';
+    searchQuery = '';
+    if (menuSearchInput) menuSearchInput.value = '';
+    if (btnClearMenuSearch) btnClearMenuSearch.style.display = 'none';
 
     viewTables.style.display = 'none';
     viewOrderDetail.style.display = 'block';
@@ -617,10 +578,11 @@
     const activeMenuCategoryList = menu[currentPhase] || [];
     const allCount = activeMenuCategoryList.reduce((acc, cat) => acc + cat.items.length, 0);
 
-    let pillsHTML = `<button class="cat-tab ${activeCategory === 'ALL' ? 'active' : ''}" data-cat="ALL">Todos (${allCount})</button>`;
-    activeMenuCategoryList.forEach(cat => {
+    let pillsHTML = `<button class="cat-tab ${activeCategory === 'ALL' ? 'active' : ''}" data-cat-idx="-1">Todos (${allCount})</button>`;
+    activeMenuCategoryList.forEach((cat, idx) => {
+      const isSelected = (activeCategory === cat.category);
       pillsHTML += `
-        <button class="cat-tab ${activeCategory === cat.category ? 'active' : ''}" data-cat="${escapeHtml(cat.category)}">
+        <button class="cat-tab ${isSelected ? 'active' : ''}" data-cat-idx="${idx}">
           ${escapeHtml(cat.category)} (${cat.items.length})
         </button>
       `;
@@ -630,7 +592,12 @@
     menuCategoriesScroll.querySelectorAll('.cat-tab').forEach(btn => {
       btn.addEventListener('click', () => {
         vibrate(15);
-        activeCategory = btn.getAttribute('data-cat');
+        const idx = parseInt(btn.getAttribute('data-cat-idx'), 10);
+        if (idx === -1 || isNaN(idx) || !activeMenuCategoryList[idx]) {
+          activeCategory = 'ALL';
+        } else {
+          activeCategory = activeMenuCategoryList[idx].category;
+        }
         renderMenuCatalog();
       });
     });
@@ -640,7 +607,7 @@
       if (activeCategory === 'ALL' || activeCategory === cat.category) {
         cat.items.forEach(item => {
           if (searchQuery) {
-            const q = searchQuery.toLowerCase();
+            const q = searchQuery.toLowerCase().trim();
             if (!item.name.toLowerCase().includes(q) && !(item.desc || '').toLowerCase().includes(q)) {
               return;
             }
@@ -652,8 +619,9 @@
 
     if (filteredItems.length === 0) {
       menuItemsGrid.innerHTML = `
-        <div class="text-center text-muted p-4">
-          No se encontraron platos para "${escapeHtml(searchQuery)}"
+        <div class="empty-catalog-box">
+          <span class="empty-catalog-icon">🍽️</span>
+          <p class="empty-catalog-text">No hay platos disponibles en esta categoría.</p>
         </div>
       `;
       return;
@@ -1102,27 +1070,38 @@
             <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
             <path d="M3 3v5h5"/>
           </svg>
-          Sí, Reiniciar Todas las Cuentas
+          Sí, Reiniciar Todo
         `;
         if (data.tables) {
           tables = data.tables;
           renderTablesView();
-          if (activeTable) {
-            activeTable = null;
-            switchView('tables');
+          if (activeTableId) {
+            activeTableId = null;
+            viewOrderDetail.style.display = 'none';
+            viewTables.style.display = 'block';
+            btnHeaderBack.style.display = 'none';
+            headerTableTitle.textContent = 'Comandas en vivo';
+          }
+        }
+        if (Array.isArray(data.outOfStock)) {
+          outOfStock = data.outOfStock;
+          updateOutOfStockCountBadge();
+          renderMenuCatalog();
+          if (outOfStockModal && outOfStockModal.classList.contains('open')) {
+            renderOutOfStockModalList();
           }
         }
         if (salesModal && salesModal.classList.contains('open')) {
           openSalesModal();
         }
-        showToast('🔄 Todas las mesas y las ventas del día han sido reiniciadas a cero.');
+        showToast('🔄 Mesas, ventas del día y disponibilidad de productos restablecidos.');
         playBeep(650);
       })
       .catch(err => {
         console.error(err);
         btnConfirmResetAll.disabled = false;
-        btnConfirmResetAll.textContent = 'Sí, Reiniciar Cuentas y Caja';
-        showToast('❌ Error al reiniciar las cuentas.');
+        btnConfirmResetAll.textContent = 'Sí, Reiniciar Todo';
+        showToast('❌ Error al reiniciar el sistema.');
       });
     });
   }

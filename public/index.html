@@ -42,10 +42,16 @@
       </div>
 
       <div class="header-right">
-        <!-- Phase Indicator Pill -->
-        <button id="btnPhaseToggle" class="phase-pill" title="Cambiar fase (Desayuno / Almuerzo)">
-          <span id="phaseIcon">🥩</span>
-          <span id="phaseLabel">Almuerzo</span>
+        <!-- Botón de Cambio Rápido de Fase (1 Clic: Desayuno <-> Almuerzo) -->
+        <button id="btnPhaseToggle" class="btn-phase-toggle" title="Clic para alternar entre Desayuno y Almuerzo">
+          <span class="phase-badge-current">
+            <span id="phaseIcon">🥩</span>
+            <span id="phaseLabel">Almuerzo</span>
+          </span>
+          <span class="phase-switch-cue">
+            <span class="phase-arrow">➔</span>
+            <span id="phaseNextLabel">Desayuno ☀️</span>
+          </span>
         </button>
 
         <!-- User Profile Selector Button -->
@@ -64,14 +70,6 @@
       </div>
     </header>
 
-    <!-- Phase Quick Banner (Desayuno vs Almuerzo) -->
-    <div class="phase-strip" id="phaseStrip">
-      <div class="phase-info">
-        <span class="phase-clock" id="currentClock">12:30 PM</span>
-        <span class="phase-schedule-tag" id="phaseScheduleTag">Almuerzo (12:00 PM - 5:00 PM)</span>
-      </div>
-      <button class="phase-switch-quick-btn" id="btnQuickSwitchPhase">Cambiar a Desayuno ☀️</button>
-    </div>
 
     <!-- VIEW 1: TABLES GRID & SALON SELECTOR -->
     <main id="viewTables" class="view-section active">
@@ -324,43 +322,6 @@
       </div>
     </div>
 
-    <!-- MODAL: CONTROL DE FASE (DESAYUNO / ALMUERZO) -->
-    <div id="phaseControlModal" class="modal-overlay">
-      <div class="modal-card">
-        <div class="modal-header">
-          <h3>Fase del Menú</h3>
-          <button class="modal-close-btn" id="btnClosePhaseModal">✕</button>
-        </div>
-        <div class="modal-body">
-          <div class="phase-mode-switch-box">
-            <label class="switch-container">
-              <span>Cambio Automático por Horario</span>
-              <input type="checkbox" id="toggleAutoPhase" checked>
-            </label>
-            <p class="text-xs text-muted mt-1">
-              ☀️ <strong>Desayuno:</strong> 9:00 AM a 12:00 PM<br>
-              🥩 <strong>Almuerzo:</strong> 12:00 PM a 5:00 PM
-            </p>
-          </div>
-
-          <div class="manual-phase-buttons mt-3">
-            <p class="text-sm font-bold mb-2">Selección Manual (Administrador):</p>
-            <div class="form-row">
-              <button class="btn-phase-choice" data-phase="desayuno" id="btnChooseDesayuno">
-                <span class="choice-icon">☕</span>
-                <span class="choice-title">Desayuno</span>
-                <span class="choice-sub">Combos, Huevos, Caldos</span>
-              </button>
-              <button class="btn-phase-choice active" data-phase="almuerzo" id="btnChooseAlmuerzo">
-                <span class="choice-icon">🥩</span>
-                <span class="choice-title">Almuerzo</span>
-                <span class="choice-sub">Llanera, Picadas, Sopas</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- MODAL: HISTORIAL DE VENTAS Y CAJA -->
     <div id="salesModal" class="modal-overlay">
@@ -402,9 +363,9 @@
               <path d="M12 9v4m0 4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
             </svg>
           </div>
-          <h3 class="reset-confirm-title">¿Reiniciar Mesas y Cuentas del Día?</h3>
+          <h3 class="reset-confirm-title">¿Reiniciar Cuentas, Mesas y Productos?</h3>
           <p class="reset-confirm-desc">
-            Esta acción pondrá <strong>todas las mesas en estado LIBRE</strong>, <strong>borrará todos los pedidos activos</strong> y <strong>reiniciará las ventas y cuentas del día a $0</strong>.
+            Esta acción pondrá <strong>todas las mesas en estado LIBRE</strong>, <strong>borrará los pedidos activos</strong>, <strong>reiniciará las ventas del día a $0</strong> y <strong>restablecerá todos los productos agotados</strong> como disponibles nuevamente.
           </p>
           <div class="reset-confirm-warning">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#f59e0b" stroke-width="2">
@@ -412,7 +373,7 @@
               <line x1="12" y1="9" x2="12" y2="13"></line>
               <line x1="12" y1="17" x2="12.01" y2="17"></line>
             </svg>
-            <span>Esta acción no se puede deshacer. Las mesas y el registro de ventas del día comenzarán desde cero.</span>
+            <span>Esta acción no se puede deshacer. Las mesas, el registro de ventas del día y los platos agotados se reiniciarán.</span>
           </div>
           <div class="reset-confirm-actions">
             <button id="btnCancelResetAll" class="btn-cancel-reset">Cancelar</button>
@@ -421,7 +382,7 @@
                 <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
                 <path d="M3 3v5h5"/>
               </svg>
-              Sí, Reiniciar Cuentas y Caja
+              Sí, Reiniciar Todo
             </button>
           </div>
         </div>

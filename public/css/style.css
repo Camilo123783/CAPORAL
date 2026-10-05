@@ -57,6 +57,14 @@ body.phase-desayuno {
     radial-gradient(at 100% 100%, rgba(220, 38, 38, 0.08) 0px, transparent 50%);
 }
 
+html {
+  background-color: #0c121e;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -64,16 +72,30 @@ body.phase-desayuno {
   -webkit-tap-highlight-color: transparent;
 }
 
+button, input, select, textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  font-family: inherit;
+}
+
+button:focus, button:focus-visible {
+  outline: none;
+}
+
 body {
   font-family: var(--font-family);
   color: var(--text-primary);
   min-height: 100vh;
-  min-height: -webkit-fill-available;
+  min-height: 100dvh;
   line-height: 1.45;
   user-select: none;
   -webkit-user-select: none;
   overflow-x: hidden;
   transition: background-color 0.4s ease;
+  -webkit-font-smoothing: antialiased;
 }
 
 .app-container {
@@ -81,9 +103,11 @@ body {
   max-width: 1400px;
   margin: 0 auto;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  padding-bottom: calc(80px + var(--safe-bottom));
+  padding-bottom: calc(85px + var(--safe-bottom));
+  overflow-x: hidden;
 }
 
 /* ==========================================================================
@@ -97,10 +121,13 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: calc(10px + var(--safe-top)) 14px 10px;
-  background: rgba(12, 18, 30, 0.92);
+  background-color: #0c121e;
+  background-color: rgba(12, 18, 30, 0.92);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border-subtle);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .header-left {
@@ -138,6 +165,23 @@ body {
   line-height: 1.1;
 }
 
+@media (max-width: 480px) {
+  .brand-title {
+    font-size: 0.82rem;
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .header-sub {
+    display: none;
+  }
+  .brand-badge {
+    font-size: 1.15rem;
+    padding: 2px;
+  }
+}
+
 .header-sub {
   display: flex;
   align-items: center;
@@ -168,24 +212,97 @@ body {
   gap: 6px;
 }
 
-.phase-pill {
-  display: flex;
+/* Botón de Cambio Rápido de Fase (1 Clic) en el Header */
+.btn-phase-toggle {
+  display: inline-flex;
   align-items: center;
-  gap: 5px;
-  background: rgba(245, 158, 11, 0.15);
-  border: 1px solid rgba(245, 158, 11, 0.35);
+  gap: 7px;
+  background: rgba(245, 158, 11, 0.16);
+  border: 1.5px solid rgba(245, 158, 11, 0.45);
   color: var(--accent-gold);
   border-radius: var(--radius-full);
-  padding: 5px 9px;
-  font-size: 0.72rem;
+  padding: 5px 12px 5px 8px;
+  font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
 }
 
-body.phase-desayuno .phase-pill {
-  background: rgba(239, 68, 68, 0.15);
-  border-color: rgba(239, 68, 68, 0.4);
-  color: #f87171;
+.btn-phase-toggle:hover {
+  background: rgba(245, 158, 11, 0.28);
+  border-color: var(--accent-gold);
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+}
+
+.btn-phase-toggle:active {
+  transform: scale(0.93);
+}
+
+body.phase-desayuno .btn-phase-toggle {
+  background: rgba(239, 68, 68, 0.18);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.25);
+}
+
+body.phase-desayuno .btn-phase-toggle:hover {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: #ef4444;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+}
+
+.phase-badge-current {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 800;
+  color: #fff;
+  font-size: 0.82rem;
+}
+
+.phase-switch-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  opacity: 0.95;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  padding-left: 6px;
+  color: var(--accent-gold);
+}
+
+body.phase-desayuno .phase-switch-cue {
+  color: #fca5a5;
+}
+
+.phase-arrow {
+  font-weight: 900;
+  font-size: 0.75rem;
+  transition: transform 0.2s ease;
+}
+
+.btn-phase-toggle:hover .phase-arrow {
+  transform: translateX(2px);
+}
+
+@media (max-width: 480px) {
+  .btn-phase-toggle {
+    padding: 5px 8px 5px 6px;
+    gap: 4px;
+    font-size: 0.72rem;
+  }
+  .phase-badge-current {
+    font-size: 0.75rem;
+  }
+  .phase-switch-cue {
+    font-size: 0.68rem;
+    padding-left: 4px;
+  }
 }
 
 .user-pill {
@@ -239,45 +356,7 @@ body.phase-desayuno .phase-pill {
   font-weight: 800;
 }
 
-/* ==========================================================================
-   Phase Quick Info Strip
-   ========================================================================== */
-.phase-strip {
-  margin: 8px 14px 4px;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 7px 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
-.phase-info {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.74rem;
-}
-
-.phase-clock {
-  font-weight: 800;
-  color: #fff;
-}
-
-.phase-schedule-tag {
-  color: var(--text-muted);
-}
-
-.phase-switch-quick-btn {
-  background: transparent;
-  border: none;
-  color: var(--accent-gold);
-  font-size: 0.72rem;
-  font-weight: 700;
-  cursor: pointer;
-  text-decoration: underline;
-}
 
 /* ==========================================================================
    SALON SELECTOR (Salón Grande vs Salón Pequeño)
@@ -287,6 +366,7 @@ body.phase-desayuno .phase-pill {
   max-width: 700px;
   margin: 0 auto;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .salon-tabs-container {
@@ -298,6 +378,7 @@ body.phase-desayuno .phase-pill {
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-subtle);
   margin-bottom: 8px;
+  box-sizing: border-box;
 }
 
 .salon-tab {
@@ -573,15 +654,53 @@ body.phase-desayuno .salon-tab.active .salon-tab-count {
    ========================================================================== */
 .table-bill-bar {
   position: sticky;
-  top: 57px;
-  z-index: 45;
+  top: 0;
+  z-index: 40;
+  background: #141c2e;
   background: rgba(14, 21, 35, 0.96);
   backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1.5px solid var(--accent-gold);
-  padding: 10px 14px;
+  padding: 8px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .table-bill-bar {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+  .table-bill-title {
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .table-tag {
+    font-size: 0.72rem;
+    padding: 2px 6px;
+  }
+  .salon-tag-badge {
+    font-size: 0.65rem;
+    padding: 2px 4px;
+  }
+  .mesero-tag {
+    font-size: 0.7rem;
+  }
+  .total-label {
+    font-size: 0.68rem;
+  }
+  .total-amount {
+    font-size: 1.15rem;
+  }
+  .btn-checkout {
+    padding: 8px 10px;
+    font-size: 0.78rem;
+    gap: 4px;
+  }
 }
 
 .table-bill-title {
@@ -634,17 +753,21 @@ body.phase-desayuno .salon-tab.active .salon-tab-count {
   gap: 6px;
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .btn-checkout:active { transform: scale(0.94); }
 
 /* Current order list */
 .current-order-box {
-  margin: 10px 14px;
+  margin: 0;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 14px;
+  padding: 12px 14px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .order-box-header {
@@ -743,7 +866,9 @@ body.phase-desayuno .salon-tab.active .salon-tab-count {
    Catalog of Products to Add
    ========================================================================== */
 .menu-catalog-section {
-  padding: 10px 14px;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .catalog-header {
@@ -794,8 +919,10 @@ body.phase-desayuno .menu-phase-indicator {
   padding: 10px 36px 10px 36px;
   color: #fff;
   font-family: inherit;
-  font-size: 0.88rem;
+  font-size: 16px; /* Must be 16px to prevent iOS Safari auto-zoom! */
   outline: none;
+  box-sizing: border-box;
+  -webkit-appearance: none;
 }
 
 .search-box input:focus {
@@ -820,43 +947,61 @@ body.phase-desayuno .menu-phase-indicator {
   display: flex;
   gap: 6px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   margin-bottom: 12px;
-  padding: 2px 0 6px;
+  padding: 2px 2px 6px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .menu-categories-scroll::-webkit-scrollbar { display: none; }
 
 .cat-tab {
   flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.05);
+  background: #1c273c;
+  background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
   border-radius: var(--radius-full);
-  padding: 6px 12px;
+  padding: 7px 13px;
   font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
+  white-space: nowrap;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
   transition: all 0.15s ease;
 }
 
+.cat-tab:active {
+  transform: scale(0.95);
+}
+
 .cat-tab.active {
-  background: var(--accent-gold);
-  color: #0b0f19;
-  border-color: var(--accent-gold);
+  background: var(--accent-gold) !important;
+  color: #0b0f19 !important;
+  border-color: var(--accent-gold) !important;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
 }
 
 body.phase-desayuno .cat-tab.active {
-  background: #ef4444;
-  color: #fff;
-  border-color: #ef4444;
+  background: #ef4444 !important;
+  color: #fff !important;
+  border-color: #ef4444 !important;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
 }
 
 /* Order detail responsive layout */
 .order-detail-layout {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
 @media (min-width: 960px) {
@@ -865,13 +1010,13 @@ body.phase-desayuno .cat-tab.active {
     grid-template-columns: 440px 1fr;
     gap: 24px;
     align-items: start;
-    padding: 0 14px;
+    padding: 0 16px;
   }
 
   .current-order-box {
     position: sticky;
-    top: 85px;
-    max-height: calc(100vh - 105px);
+    top: calc(65px + var(--safe-top));
+    max-height: calc(100vh - 85px);
     overflow-y: auto;
   }
 }
@@ -881,6 +1026,8 @@ body.phase-desayuno .cat-tab.active {
   display: grid;
   grid-template-columns: 1fr;
   gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 600px) {
@@ -891,33 +1038,42 @@ body.phase-desayuno .cat-tab.active {
 }
 
 .product-add-card {
-  background: var(--bg-card);
+  background-color: #172133;
+  background-color: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 12px;
+  padding: 12px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  gap: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .product-add-info {
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .product-add-title {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 700;
   color: #fff;
   line-height: 1.25;
+  word-break: break-word;
 }
 
 .product-add-desc {
   font-size: 0.74rem;
   color: var(--text-muted);
-  margin-top: 2px;
-  line-height: 1.2;
+  margin-top: 3px;
+  line-height: 1.25;
+  word-break: break-word;
 }
 
 .product-add-price {
@@ -927,26 +1083,60 @@ body.phase-desayuno .cat-tab.active {
   margin-top: 4px;
 }
 
+body.phase-desayuno .product-add-price {
+  color: #f87171;
+}
+
 .btn-add-item {
   background: linear-gradient(135deg, #f59e0b, #d97706);
   border: none;
   border-radius: var(--radius-md);
   color: #0b0f19;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 800;
-  padding: 10px 14px;
+  padding: 9px 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 4px;
   flex-shrink: 0;
+  white-space: nowrap;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
 }
 
-.btn-add-item:active { transform: scale(0.92); }
+.btn-add-item:active { transform: scale(0.93); }
 
 body.phase-desayuno .btn-add-item {
   background: linear-gradient(135deg, #ef4444, #dc2626);
   color: #fff;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.empty-catalog-box {
+  background: rgba(20, 28, 46, 0.6);
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 30px 20px;
+  text-align: center;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.empty-catalog-icon {
+  font-size: 1.8rem;
+}
+
+.empty-catalog-text {
+  font-size: 0.88rem;
+  font-weight: 600;
 }
 
 /* ==========================================================================
@@ -977,14 +1167,21 @@ body.phase-desayuno .btn-add-item {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  width: calc(100% - 28px);
+  width: calc(100% - 24px);
   max-width: 440px;
   max-height: 90vh;
+  max-height: 88dvh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding: 22px 18px 18px 18px;
+  box-sizing: border-box;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
   transform: translateY(20px) scale(0.96);
   transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.modal-card.large {
+  max-width: 540px;
 }
 
 .modal-header {
@@ -1250,46 +1447,7 @@ body.phase-desayuno .btn-add-item {
   text-transform: uppercase;
 }
 
-/* ==========================================================================
-   PHASE CHOICE MODAL
-   ========================================================================== */
-.phase-mode-switch-box {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 12px;
-}
 
-.switch-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-.btn-phase-choice {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1.5px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 14px 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 4px;
-  cursor: pointer;
-  color: #fff;
-}
-
-.btn-phase-choice.active {
-  border-color: var(--accent-gold);
-  background: rgba(245, 158, 11, 0.15);
-}
-
-.choice-icon { font-size: 1.6rem; }
-.choice-title { font-weight: 800; font-size: 0.95rem; }
-.choice-sub { font-size: 0.68rem; color: var(--text-muted); }
 
 /* QR & Utils */
 .qr-frame {
@@ -1609,12 +1767,11 @@ body.phase-desayuno .btn-add-item {
   border-radius: 99px;
 }
 
-/* Grayscale styling for out of stock items in menu catalog */
+/* Disabled styling for out of stock items in menu catalog */
 .product-add-card.out-of-stock {
-  filter: grayscale(1);
-  opacity: 0.52;
-  background: rgba(25, 30, 42, 0.5) !important;
-  border-color: rgba(239, 68, 68, 0.3) !important;
+  opacity: 0.55;
+  background-color: rgba(25, 30, 42, 0.65) !important;
+  border-color: rgba(239, 68, 68, 0.35) !important;
   position: relative;
   overflow: hidden;
 }
@@ -1717,4 +1874,14 @@ body.phase-desayuno .btn-add-item {
 .font-bold { font-weight: 700; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .form-group { display: flex; flex-direction: column; gap: 4px; }
-input { background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 9px 12px; color: #fff; }
+input, select, textarea {
+  font-size: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  color: #fff;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+}

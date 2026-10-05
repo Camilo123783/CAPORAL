@@ -25,6 +25,7 @@ const SALES_FILE = path.join(DATA_DIR, 'sales.json');
 const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json');
 const OUT_OF_STOCK_FILE = path.join(DATA_DIR, 'outOfStock.json');
 const LINKED_ITEMS_FILE = path.join(DATA_DIR, 'linkedItems.json');
+const PHASE_FILE = path.join(DATA_DIR, 'phase.json');
 
 app.use(cors());
 app.use(express.json());
@@ -59,27 +60,8 @@ let products = readJSON(PRODUCTS_FILE, []);
 let outOfStock = readJSON(OUT_OF_STOCK_FILE, []);
 let linkedItems = readJSON(LINKED_ITEMS_FILE, {});
 
-// Phase System: Auto (9am-12pm Desayuno, 12pm-17pm Almuerzo) vs Manual Override
-let phaseMode = 'auto'; // 'auto' | 'manual'
-let manualPhase = 'almuerzo'; // 'desayuno' | 'almuerzo'
-
-function calculatePhase() {
-  if (phaseMode === 'manual') {
-    return manualPhase;
-  }
-  const now = new Date();
-  const hour = now.getHours();
-  // 9:00 AM to 11:59 AM -> Desayuno
-  if (hour >= 9 && hour < 12) {
-    return 'desayuno';
-  }
-  // 12:00 PM to 4:59 PM (17:00) -> Almuerzo
-  if (hour >= 12 && hour < 17) {
-    return 'almuerzo';
-  }
-  // If outside standard window, default to closest
-  return hour < 9 ? 'desayuno' : 'almuerzo';
-}
+// Phase System: 100% Manual (Desayuno vs Almuerzo)
+let currentPhase = readJSON(PHASE_FILE, { currentPhase: 'almuerzo' }).currentPhase || 'almuerzo';
 
 function getTableTotal(order) {
   const total = order.reduce((sum, item) => sum + (item.price * item.qty), 0);
@@ -113,7 +95,6 @@ function getNetworkIp() {
 
 // Global state for initial load
 app.get('/api/state', (req, res) => {
-  const currentPhase = calculatePhase();
   const tablesWithTotals = tables.map(t => ({
     ...t,
     ...getTableTotal(t.order, t.tipPercent)
@@ -125,8 +106,6 @@ app.get('/api/state', (req, res) => {
     menu,
     users,
     currentPhase,
-    phaseMode,
-    manualPhase,
     outOfStock,
     activeTime: new Date().toLocaleTimeString('es-CO')
   });
@@ -201,22 +180,24 @@ app.get('/api/info', async (req, res) => {
   });
 });
 
-// Phase switch API (Auto or Manual)
+// Phase switch API (100% Manual: 1-Click Toggle: Desayuno <-> Almuerzo)
 app.post('/api/phase', (req, res) => {
-  const { mode, phase } = req.body;
-  if (mode === 'auto' || mode === 'manual') {
-    phaseMode = mode;
-  }
+  const { phase } = req.body;
   if (phase === 'desayuno' || phase === 'almuerzo') {
-    manualPhase = phase;
+    currentPhase = phase;
+  } else {
+    currentPhase = (currentPhase === 'desayuno') ? 'almuerzo' : 'desayuno';
   }
-  const currentPhase = calculatePhase();
-  io.emit('phase-changed', {
-    currentPhase,
-    phaseMode,
-    manualPhase
-  });
-  res.json({ success: true, currentPhase, phaseMode, manualPhase });
+  writeJSON(PHASE_FILE, { currentPhase });
+  io.emit('phase-changed', { currentPhase });
+  res.json({ success: true, currentPhase });
+});
+
+app.post('/api/phase/toggle', (req, res) => {
+  currentPhase = (currentPhase === 'desayuno') ? 'almuerzo' : 'desayuno';
+  writeJSON(PHASE_FILE, { currentPhase });
+  io.emit('phase-changed', { currentPhase });
+  res.json({ success: true, currentPhase });
 });
 
 // Add / Update item in Table
@@ -381,6 +362,10 @@ app.post('/api/tables/reset-all', (req, res) => {
   sales = [];
   writeJSON(SALES_FILE, sales);
 
+  // Reiniciar también los productos agotados (volverlos todos disponibles)
+  outOfStock = [];
+  writeJSON(OUT_OF_STOCK_FILE, outOfStock);
+
   const tablesWithTotals = tables.map(t => ({
     ...t,
     ...getTableTotal(t.order, t.tipPercent)
@@ -389,16 +374,23 @@ app.post('/api/tables/reset-all', (req, res) => {
   io.emit('all-tables-reset', {
     tables: tablesWithTotals,
     sales: [],
+    outOfStock: [],
     resetBy: userName || 'Camilo'
   });
 
-  res.json({ success: true, tables: tablesWithTotals, sales: [] });
+  io.emit('out-of-stock-changed', {
+    outOfStock: [],
+    itemName: 'Todos los productos',
+    isOut: false,
+    isReset: true
+  });
+
+  res.json({ success: true, tables: tablesWithTotals, sales: [], outOfStock: [] });
 });
 
 // Sockets
 io.on('connection', (socket) => {
   // Send state on connect
-  const currentPhase = calculatePhase();
   const tablesWithTotals = tables.map(t => ({
     ...t,
     ...getTableTotal(t.order, t.tipPercent)
@@ -409,19 +401,17 @@ io.on('connection', (socket) => {
     menu,
     users,
     currentPhase,
-    phaseMode,
-    manualPhase,
     outOfStock
   });
 
   socket.on('switch-phase', (data) => {
-    if (data.mode) phaseMode = data.mode;
-    if (data.phase) manualPhase = data.phase;
-    io.emit('phase-changed', {
-      currentPhase: calculatePhase(),
-      phaseMode,
-      manualPhase
-    });
+    if (data && (data.phase === 'desayuno' || data.phase === 'almuerzo')) {
+      currentPhase = data.phase;
+    } else {
+      currentPhase = (currentPhase === 'desayuno') ? 'almuerzo' : 'desayuno';
+    }
+    writeJSON(PHASE_FILE, { currentPhase });
+    io.emit('phase-changed', { currentPhase });
   });
 
   socket.on('table-add-item', (data) => {
@@ -496,6 +486,10 @@ io.on('connection', (socket) => {
     sales = [];
     writeJSON(SALES_FILE, sales);
 
+    // Reiniciar también los productos agotados (volverlos todos disponibles)
+    outOfStock = [];
+    writeJSON(OUT_OF_STOCK_FILE, outOfStock);
+
     const tablesWithTotals = tables.map(t => ({
       ...t,
       ...getTableTotal(t.order, t.tipPercent)
@@ -504,18 +498,18 @@ io.on('connection', (socket) => {
     io.emit('all-tables-reset', {
       tables: tablesWithTotals,
       sales: [],
+      outOfStock: [],
       resetBy: (data && data.userName) || 'Camilo'
+    });
+
+    io.emit('out-of-stock-changed', {
+      outOfStock: [],
+      itemName: 'Todos los productos',
+      isOut: false,
+      isReset: true
     });
   });
 });
-
-// Periodic Phase Check (Every 1 minute auto updates if needed)
-setInterval(() => {
-  if (phaseMode === 'auto') {
-    const current = calculatePhase();
-    io.emit('phase-tick', { currentPhase: current });
-  }
-}, 60000);
 
 // Start Server
 server.listen(PORT, async () => {
@@ -528,7 +522,7 @@ server.listen(PORT, async () => {
   console.log('======================================================');
   console.log(`💻 Computadora: ${localUrl}`);
   console.log(`📱 Celular:     ${networkUrl}`);
-  console.log(`⏰ Fase actual: ${calculatePhase().toUpperCase()} (${phaseMode})`);
+  console.log(`⏰ Fase actual: ${currentPhase.toUpperCase()} (Manual)`);
   console.log('------------------------------------------------------');
   try {
     const qr = await QRCode.toString(networkUrl, { type: 'terminal', small: true });
