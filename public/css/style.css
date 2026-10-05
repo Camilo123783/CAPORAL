@@ -290,6 +290,16 @@ body.phase-desayuno .phase-switch-cue {
   transform: translateX(2px);
 }
 
+@media (max-width: 520px) {
+  #userNameHeader {
+    display: none;
+  }
+  .user-pill {
+    padding: 3px;
+    border-radius: 50%;
+  }
+}
+
 @media (max-width: 480px) {
   .btn-phase-toggle {
     padding: 5px 8px 5px 6px;
@@ -297,11 +307,21 @@ body.phase-desayuno .phase-switch-cue {
     font-size: 0.72rem;
   }
   .phase-badge-current {
-    font-size: 0.75rem;
+    font-size: 0.74rem;
   }
   .phase-switch-cue {
     font-size: 0.68rem;
     padding-left: 4px;
+  }
+}
+
+@media (max-width: 375px) {
+  .phase-switch-cue {
+    display: none;
+  }
+  .btn-phase-toggle {
+    padding: 5px 8px;
+    border-radius: var(--radius-full);
   }
 }
 
@@ -489,31 +509,24 @@ body.phase-desayuno .salon-tab.active .salon-tab-count {
 .tables-grid {
   padding: 10px 14px 90px;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
-@media (min-width: 560px) {
+@media (max-width: 480px) {
   .tables-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-    padding: 12px 18px 90px;
-  }
-}
-
-@media (min-width: 920px) {
-  .tables-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    padding: 16px 24px 90px;
+    grid-template-columns: 1fr;
+    padding: 8px 10px 90px;
+    gap: 10px;
   }
 }
 
 @media (min-width: 1240px) {
   .tables-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
-    padding: 18px 30px 90px;
+    gap: 16px;
+    padding: 14px 20px 90px;
   }
 }
 
@@ -809,13 +822,15 @@ body.phase-desayuno .salon-tab.active .salon-tab-count {
 
 .order-item-info {
   flex: 1;
+  min-width: 0;
 }
 
 .order-item-name {
   font-size: 0.88rem;
   font-weight: 700;
   color: #fff;
-  line-height: 1.2;
+  line-height: 1.25;
+  word-break: break-word;
 }
 
 .order-item-unit-price {
@@ -1333,6 +1348,8 @@ body.phase-desayuno .btn-add-item {
   padding: 8px 4px;
   cursor: pointer;
   text-align: center;
+  word-break: break-word;
+  line-height: 1.2;
 }
 
 .pay-opt.active {
@@ -1344,6 +1361,13 @@ body.phase-desayuno .btn-add-item {
 .cash-calc-row {
   display: flex;
   gap: 10px;
+}
+
+@media (max-width: 360px) {
+  .cash-calc-row {
+    flex-direction: column;
+    gap: 8px;
+  }
 }
 
 .cash-change-display {
@@ -1551,6 +1575,25 @@ body.phase-desayuno .btn-add-item {
   gap: 10px;
   pointer-events: none;
   flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .bottom-panel-bar {
+    left: 8px;
+    right: 8px;
+    gap: 6px;
+    bottom: calc(8px + var(--safe-bottom));
+  }
+  .btn-out-of-stock-bar {
+    padding: 7px 12px !important;
+    font-size: 0.76rem !important;
+    gap: 5px !important;
+  }
+  .btn-reset-all-bar {
+    padding: 7px 12px !important;
+    font-size: 0.76rem !important;
+    gap: 5px !important;
+  }
 }
 
 /* Camilo Bottom Bar Reset Button */
