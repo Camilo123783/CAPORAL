@@ -44,7 +44,6 @@
   const userAvatar = document.getElementById('userAvatar');
   const userNameHeader = document.getElementById('userNameHeader');
 
-  const btnOpenQR = document.getElementById('btnOpenQR');
   const btnOpenSales = document.getElementById('btnOpenSales');
 
   // Salon Tabs
@@ -91,7 +90,7 @@
   const userProfileModal = document.getElementById('userProfileModal');
   const phaseControlModal = document.getElementById('phaseControlModal');
   const salesModal = document.getElementById('salesModal');
-  const qrModal = document.getElementById('qrModal');
+  const resetAllConfirmModal = document.getElementById('resetAllConfirmModal');
 
   // Checkout Receipt Elements
   const receiptTableNum = document.getElementById('receiptTableNum');
@@ -228,33 +227,78 @@
     playBeep(700);
   });
 
+  socket.on('all-tables-reset', (data) => {
+    if (data.tables) {
+      tables = data.tables;
+      renderTablesView();
+      if (activeTable) {
+        activeTable = null;
+        switchView('tables');
+      }
+      if (salesModal && salesModal.classList.contains('open')) {
+        openSalesModal();
+      }
+      showToast(`🔄 Todas las mesas y cuentas del día fueron reiniciadas por ${escapeHtml(data.resetBy || 'Camilo')}`);
+      playBeep(650);
+    }
+  });
+
   // ==========================================================================
-  // User Profile Setup (5 Meseros / Usuarios)
+  // User Profile Setup (5 Meseros / Usuarios) & Permisos de Administrador
   // ==========================================================================
+
+  function isCamiloUser() {
+    return currentUser && currentUser.name && currentUser.name.trim().toLowerCase().includes('camilo');
+  }
+
+  function updateCamiloResetButton() {
+    const btnReset = document.getElementById('btnResetAllTables');
+    const containerFooter = document.getElementById('camiloResetContainer');
+    const show = isCamiloUser();
+    if (btnReset) {
+      btnReset.style.display = show ? 'inline-flex' : 'none';
+    }
+    if (containerFooter) {
+      containerFooter.style.display = show ? 'flex' : 'none';
+    }
+  }
 
   function setupCurrentUser() {
     const savedId = localStorage.getItem('caporal_user_id');
     currentUser = users.find(u => u.id === savedId) || users[0] || {
-      id: 'u1', name: 'Camilo', role: 'mesero', icon: '🤠', color: '#f59e0b'
+      id: 'u1', name: 'Camilo', role: 'mesero', icon: '', color: '#f59e0b'
     };
-    userAvatar.textContent = currentUser.icon || '🤠';
-    userNameHeader.textContent = currentUser.name;
+    if (userAvatar) {
+      const initial = (currentUser.name || 'C').charAt(0).toUpperCase();
+      userAvatar.textContent = initial;
+      userAvatar.style.backgroundColor = currentUser.color || '#f59e0b';
+    }
+    if (userNameHeader) {
+      userNameHeader.textContent = currentUser.name;
+    }
+    updateCamiloResetButton();
   }
 
   function renderUsersModalList() {
     const list = document.getElementById('usersSelectionList');
-    list.innerHTML = users.map(u => `
-      <div class="user-choice-card ${currentUser && currentUser.id === u.id ? 'active' : ''}" data-id="${u.id}">
-        <div class="user-choice-left">
-          <span class="user-avatar-badge">${u.icon || '🤠'}</span>
-          <div>
-            <div class="user-choice-name">${escapeHtml(u.name)}</div>
-            <div class="user-choice-role">Mesero de Sala</div>
+    list.innerHTML = users.map(u => {
+      const initial = (u.name || 'U').charAt(0).toUpperCase();
+      const color = u.color || '#f59e0b';
+      const isActive = currentUser && currentUser.id === u.id;
+      return `
+        <div class="user-choice-card ${isActive ? 'active' : ''}" data-id="${u.id}">
+          <div class="user-choice-left">
+            <span class="user-avatar-badge" style="background-color: ${color}; color: #ffffff; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; font-size: 1rem;">
+              ${initial}
+            </span>
+            <div>
+              <div class="user-choice-name">${escapeHtml(u.name)}</div>
+            </div>
           </div>
+          ${isActive ? '<span class="text-gold font-bold">✓ En uso</span>' : ''}
         </div>
-        ${currentUser && currentUser.id === u.id ? '<span class="text-gold font-bold">✓ En uso</span>' : ''}
-      </div>
-    `).join('');
+      `;
+    }).join('');
 
     list.querySelectorAll('.user-choice-card').forEach(card => {
       card.addEventListener('click', () => {
@@ -362,8 +406,8 @@
     activeSalon = 'grande';
     tabSalonGrande.classList.add('active');
     tabSalonPequeno.classList.remove('active');
-    activeSalonTitle.textContent = 'Mesas de Salón Grande';
-    activeSalonSub.textContent = 'Mesas 1 a 96 (Ordenadas de menor a mayor)';
+    if (activeSalonTitle) activeSalonTitle.textContent = 'Mesas de Salón Grande';
+    if (activeSalonSub) activeSalonSub.textContent = 'Mesas 1 a 96 (Ordenadas de menor a mayor)';
     renderTablesView();
   });
 
@@ -372,8 +416,8 @@
     activeSalon = 'pequeño';
     tabSalonPequeno.classList.add('active');
     tabSalonGrande.classList.remove('active');
-    activeSalonTitle.textContent = 'Mesas de Salón Pequeño';
-    activeSalonSub.textContent = 'Mesas 6 a 60 (Ordenadas de menor a mayor)';
+    if (activeSalonTitle) activeSalonTitle.textContent = 'Mesas de Salón Pequeño';
+    if (activeSalonSub) activeSalonSub.textContent = 'Mesas 6 a 60 (Ordenadas de menor a mayor)';
     renderTablesView();
   });
 
@@ -400,8 +444,8 @@
     const freeCount = currentSalonTables.filter(t => t.status === 'free').length;
     const busyCount = currentSalonTables.length - freeCount;
 
-    countFreeTables.textContent = `${freeCount} Libres`;
-    countBusyTables.textContent = `${busyCount} Ocupadas`;
+    if (countFreeTables) countFreeTables.textContent = `${freeCount} Libres`;
+    if (countBusyTables) countBusyTables.textContent = `${busyCount} Ocupadas`;
 
     tablesGrid.innerHTML = currentSalonTables.map(t => {
       const isBusy = t.status === 'busy' && t.order && t.order.length > 0;
@@ -501,7 +545,7 @@
     headerTableTitle.textContent = `${table.name} (${table.salon === 'grande' ? 'S. Grande' : 'S. Pequeño'})`;
     orderViewTableName.textContent = table.name;
     orderViewSalonBadge.textContent = table.salon === 'grande' ? '🏛️ Salón Grande' : '🏡 Salón Pequeño';
-    orderViewMesero.textContent = currentUser ? `${currentUser.icon} ${currentUser.name}` : 'Mesero';
+    orderViewMesero.textContent = currentUser ? currentUser.name : 'Mesero';
     orderViewTotal.textContent = formatCOP(table.total || 0);
 
     const items = table.order || [];
@@ -998,34 +1042,90 @@
   });
 
   // ==========================================================================
-  // QR MODAL
+  // CONFIRMACIÓN REINICIAR TODAS LAS CUENTAS (EXCLUSIVO PARA CAMILO)
   // ==========================================================================
 
-  btnOpenQR.addEventListener('click', () => {
-    qrModal.classList.add('open');
-    fetch('/api/info')
-      .then(r => r.json())
-      .then(d => {
-        if (d.qrDataUrl) {
-          document.getElementById('qrImage').src = d.qrDataUrl;
-        }
-        document.getElementById('networkUrlInput').value = d.networkUrl || window.location.href;
+  const btnResetAllTables = document.getElementById('btnResetAllTables');
+  const btnResetAllTablesFooter = document.getElementById('btnResetAllTablesFooter');
+  const btnCloseResetConfirmModal = document.getElementById('btnCloseResetConfirmModal');
+  const btnCancelResetAll = document.getElementById('btnCancelResetAll');
+  const btnConfirmResetAll = document.getElementById('btnConfirmResetAll');
+
+  function openResetConfirmModal() {
+    if (!isCamiloUser()) {
+      showToast('⚠️ Solo el usuario Camilo puede reiniciar las cuentas.');
+      return;
+    }
+    vibrate(30);
+    if (resetAllConfirmModal) resetAllConfirmModal.classList.add('open');
+  }
+
+  function closeResetConfirmModal() {
+    if (resetAllConfirmModal) resetAllConfirmModal.classList.remove('open');
+  }
+
+  if (btnResetAllTables) {
+    btnResetAllTables.addEventListener('click', openResetConfirmModal);
+  }
+  if (btnResetAllTablesFooter) {
+    btnResetAllTablesFooter.addEventListener('click', openResetConfirmModal);
+  }
+  if (btnCloseResetConfirmModal) {
+    btnCloseResetConfirmModal.addEventListener('click', closeResetConfirmModal);
+  }
+  if (btnCancelResetAll) {
+    btnCancelResetAll.addEventListener('click', closeResetConfirmModal);
+  }
+
+  if (btnConfirmResetAll) {
+    btnConfirmResetAll.addEventListener('click', () => {
+      if (!isCamiloUser()) {
+        showToast('⚠️ Acción no autorizada.');
+        closeResetConfirmModal();
+        return;
+      }
+
+      btnConfirmResetAll.disabled = true;
+      btnConfirmResetAll.textContent = 'Reiniciando...';
+
+      fetch('/api/tables/reset-all', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userName: currentUser ? currentUser.name : 'Camilo' })
       })
-      .catch(() => {
-        document.getElementById('networkUrlInput').value = window.location.href;
+      .then(res => res.json())
+      .then(data => {
+        closeResetConfirmModal();
+        btnConfirmResetAll.disabled = false;
+        btnConfirmResetAll.innerHTML = `
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          Sí, Reiniciar Todas las Cuentas
+        `;
+        if (data.tables) {
+          tables = data.tables;
+          renderTablesView();
+          if (activeTable) {
+            activeTable = null;
+            switchView('tables');
+          }
+        }
+        if (salesModal && salesModal.classList.contains('open')) {
+          openSalesModal();
+        }
+        showToast('🔄 Todas las mesas y las ventas del día han sido reiniciadas a cero.');
+        playBeep(650);
+      })
+      .catch(err => {
+        console.error(err);
+        btnConfirmResetAll.disabled = false;
+        btnConfirmResetAll.textContent = 'Sí, Reiniciar Cuentas y Caja';
+        showToast('❌ Error al reiniciar las cuentas.');
       });
-  });
-
-  document.getElementById('btnCloseQR').addEventListener('click', () => {
-    qrModal.classList.remove('open');
-  });
-
-  document.getElementById('btnCopyUrl').addEventListener('click', () => {
-    const input = document.getElementById('networkUrlInput');
-    navigator.clipboard.writeText(input.value).then(() => {
-      showToast('📋 Enlace copiado al portapapeles');
     });
-  });
+  }
 
   // ==========================================================================
   // UTILITIES

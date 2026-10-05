@@ -3,20 +3,10 @@
     "id": 6,
     "salon": "pequeño",
     "name": "Mesa 6",
-    "status": "busy",
-    "order": [
-      {
-        "id": "alm-s4",
-        "name": "½ Mondongo",
-        "price": 8000,
-        "qty": 1,
-        "notes": "",
-        "addedBy": "Mesero 1 (Juan)",
-        "addedAt": "2026-10-05T03:48:45.070Z"
-      }
-    ],
-    "mesero": "Mesero 1 (Juan)",
-    "openedAt": "2026-10-05T03:48:45.070Z",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
     "notes": "",
     "tipPercent": 0
   },
@@ -167,20 +157,10 @@
     "id": 2,
     "salon": "grande",
     "name": "Mesa 2",
-    "status": "busy",
-    "order": [
-      {
-        "id": "alm-s2",
-        "name": "½ Sopa del Día (Mute o Pajarilla)",
-        "price": 8000,
-        "qty": 1,
-        "notes": "",
-        "addedBy": "Camilo",
-        "addedAt": "2026-10-05T04:11:55.228Z"
-      }
-    ],
-    "mesero": "Camilo",
-    "openedAt": "2026-10-05T04:11:55.228Z",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
     "notes": "",
     "tipPercent": 0
   },
@@ -221,22 +201,10 @@
     "id": 15,
     "salon": "grande",
     "name": "Mesa 15",
-    "status": "busy",
-    "order": [
-      {
-        "id": "alm-s3",
-        "name": "Mondongo",
-        "price": 12000,
-        "qty": 3,
-        "notes": "",
-        "addedBy": "Mesero 1 (Juan)",
-        "addedAt": "2026-10-05T03:48:30.952Z",
-        "updatedBy": "Mesero 1 (Juan)",
-        "updatedAt": "2026-10-05T03:48:32.409Z"
-      }
-    ],
-    "mesero": "Mesero 1 (Juan)",
-    "openedAt": "2026-10-05T03:48:30.952Z",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
     "notes": "",
     "tipPercent": 0
   },

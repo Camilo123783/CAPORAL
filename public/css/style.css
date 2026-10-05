@@ -77,12 +77,13 @@ body {
 }
 
 .app-container {
-  max-width: 540px;
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding-bottom: calc(50px + var(--safe-bottom));
+  padding-bottom: calc(80px + var(--safe-bottom));
 }
 
 /* ==========================================================================
@@ -190,15 +191,30 @@ body.phase-desayuno .phase-pill {
 .user-pill {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--border-subtle);
   color: #fff;
   border-radius: var(--radius-full);
-  padding: 5px 9px;
-  font-size: 0.75rem;
+  padding: 4px 10px 4px 4px;
+  font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.user-avatar-initial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  color: #0b0f19;
+  font-weight: 800;
+  font-size: 0.76rem;
+  line-height: 1;
 }
 
 .user-pill:active { transform: scale(0.94); }
@@ -268,6 +284,9 @@ body.phase-desayuno .phase-pill {
    ========================================================================== */
 .salon-selector-box {
   padding: 8px 14px 2px;
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .salon-tabs-container {
@@ -387,10 +406,34 @@ body.phase-desayuno .salon-tab.active .salon-tab-count {
 }
 
 .tables-grid {
-  padding: 10px 14px;
-  display: flex;
-  flex-direction: column;
+  padding: 10px 14px 90px;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 12px;
+}
+
+@media (min-width: 560px) {
+  .tables-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    padding: 12px 18px 90px;
+  }
+}
+
+@media (min-width: 920px) {
+  .tables-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 16px 24px 90px;
+  }
+}
+
+@media (min-width: 1240px) {
+  .tables-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    padding: 18px 30px 90px;
+  }
 }
 
 .table-card {
@@ -809,11 +852,42 @@ body.phase-desayuno .cat-tab.active {
   border-color: #ef4444;
 }
 
-/* Products Cards Grid */
-.menu-items-grid {
+/* Order detail responsive layout */
+.order-detail-layout {
   display: flex;
   flex-direction: column;
+  gap: 14px;
+}
+
+@media (min-width: 960px) {
+  .order-detail-layout {
+    display: grid;
+    grid-template-columns: 440px 1fr;
+    gap: 24px;
+    align-items: start;
+    padding: 0 14px;
+  }
+
+  .current-order-box {
+    position: sticky;
+    top: 85px;
+    max-height: calc(100vh - 105px);
+    overflow-y: auto;
+  }
+}
+
+/* Products Cards Grid */
+.menu-items-grid {
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 10px;
+}
+
+@media (min-width: 600px) {
+  .menu-items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
 }
 
 .product-add-card {
@@ -1310,12 +1384,193 @@ body.phase-desayuno .btn-add-item {
   bottom: calc(10px + var(--safe-bottom));
   left: 14px;
   right: 14px;
-  max-width: 512px;
+  max-width: 620px;
   margin: 0 auto;
   z-index: 45;
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 10px;
   pointer-events: none;
+  flex-wrap: wrap;
+}
+
+/* Camilo Bottom Bar Reset Button */
+.btn-reset-all-bar {
+  pointer-events: auto;
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: var(--radius-full);
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: #fecaca;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.btn-reset-all-bar:hover {
+  background: rgba(239, 68, 68, 0.35);
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
+.btn-reset-all-bar:active {
+  transform: scale(0.95);
+}
+
+/* Camilo Reset Button inside Tables View Footer */
+.camilo-reset-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px 14px 30px;
+  max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.btn-reset-all-footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-reset-all-footer:hover {
+  background: rgba(239, 68, 68, 0.22);
+  border-color: rgba(239, 68, 68, 0.6);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.btn-reset-all-footer:active {
+  transform: scale(0.97);
+}
+
+/* Reset All Tables Confirmation Modal */
+.reset-confirm-card {
+  max-width: 440px;
+  text-align: center;
+  padding: 24px 20px 20px !important;
+}
+
+.reset-confirm-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reset-confirm-icon-box {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.reset-confirm-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.reset-confirm-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+
+.reset-confirm-desc strong {
+  color: #fff;
+}
+
+.reset-confirm-warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-size: 0.78rem;
+  color: #fbbf24;
+  text-align: left;
+  margin-bottom: 20px;
+  line-height: 1.35;
+}
+
+.reset-confirm-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.btn-cancel-reset {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel-reset:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+.btn-danger-reset {
+  flex: 1.4;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border: none;
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+  transition: all 0.2s ease;
+}
+
+.btn-danger-reset:hover {
+  background: linear-gradient(135deg, #f87171, #ef4444);
+  box-shadow: 0 6px 18px rgba(239, 68, 68, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-danger-reset:active {
+  transform: scale(0.97);
 }
 
 .btn-out-of-stock-bar {

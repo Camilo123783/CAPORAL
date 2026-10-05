@@ -64,8 +64,10 @@
     {
       "category": "Sopas",
       "items": [
-        { "id": "alm-s1", "name": "Sopa del Día (Mute o Pajarilla)", "desc": "Mute o Pajarilla - Sin acompañamiento", "price": 11000 },
-        { "id": "alm-s2", "name": "½ Sopa del Día (Mute o Pajarilla)", "desc": "Mute o Pajarilla - Media porción", "price": 8000 },
+        { "id": "alm-s1", "name": "Mute", "desc": "Sin acompañamiento", "price": 11000 },
+        { "id": "alm-s2", "name": "½ Mute", "desc": "Media porción", "price": 8000 },
+        { "id": "alm-s5", "name": "Pajarilla", "desc": "Sin acompañamiento", "price": 11000 },
+        { "id": "alm-s6", "name": "½ Pajarilla", "desc": "Media porción", "price": 8000 },
         { "id": "alm-s3", "name": "Mondongo", "desc": "Sin acompañamiento", "price": 12000 },
         { "id": "alm-s4", "name": "½ Mondongo", "desc": "Media porción", "price": 8000 }
       ]

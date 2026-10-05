@@ -3,6 +3,8 @@
   "alm-s4": ["alm-s3"],
   "alm-s1": ["alm-s2"],
   "alm-s2": ["alm-s1"],
+  "alm-s5": ["alm-s6"],
+  "alm-s6": ["alm-s5"],
   "alm-ll1": ["alm-ll2"],
   "alm-ll2": ["alm-ll1"],
   "alm-ll3": ["alm-ll4"],

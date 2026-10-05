@@ -1,7 +1,7 @@
 [
-  { "id": "u1", "name": "Camilo", "role": "mesero", "color": "#f59e0b", "icon": "🤠" },
-  { "id": "u2", "name": "Cristian (Alejito)", "role": "mesero", "color": "#10b981", "icon": "🥩" },
-  { "id": "u3", "name": "Ivan (Dario)", "role": "mesero", "color": "#38bdf8", "icon": "☕" },
-  { "id": "u4", "name": "Mauricio (MegaMente)", "role": "mesero", "color": "#ec4899", "icon": "🧠" },
-  { "id": "u5", "name": "Lorena", "role": "mesero", "color": "#a855f7", "icon": "🌸" }
+  { "id": "u1", "name": "Camilo", "role": "mesero", "color": "#f59e0b", "icon": "" },
+  { "id": "u2", "name": "Cristian (Alejito)", "role": "mesero", "color": "#10b981", "icon": "" },
+  { "id": "u3", "name": "Ivan (Dario)", "role": "mesero", "color": "#38bdf8", "icon": "" },
+  { "id": "u4", "name": "Mauricio (MegaMente)", "role": "mesero", "color": "#ec4899", "icon": "" },
+  { "id": "u5", "name": "Lorena", "role": "mesero", "color": "#a855f7", "icon": "" }
 ]

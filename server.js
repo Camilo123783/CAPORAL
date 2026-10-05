@@ -364,6 +364,37 @@ app.get('/api/sales', (req, res) => {
   res.json(sales);
 });
 
+// Reset all tables and daily sales (Only available for authorized user, e.g. Camilo)
+app.post('/api/tables/reset-all', (req, res) => {
+  const { userName } = req.body;
+  tables.forEach(t => {
+    t.status = 'free';
+    t.order = [];
+    t.mesero = null;
+    t.openedAt = null;
+    t.notes = '';
+    t.tipPercent = 0;
+  });
+  writeJSON(TABLES_FILE, tables);
+
+  // Reiniciar también las cuentas y caja del día
+  sales = [];
+  writeJSON(SALES_FILE, sales);
+
+  const tablesWithTotals = tables.map(t => ({
+    ...t,
+    ...getTableTotal(t.order, t.tipPercent)
+  }));
+
+  io.emit('all-tables-reset', {
+    tables: tablesWithTotals,
+    sales: [],
+    resetBy: userName || 'Camilo'
+  });
+
+  res.json({ success: true, tables: tablesWithTotals, sales: [] });
+});
+
 // Sockets
 io.on('connection', (socket) => {
   // Send state on connect
@@ -448,6 +479,33 @@ io.on('connection', (socket) => {
     const totals = getTableTotal(table.order, table.tipPercent);
     const updatedTable = { ...table, ...totals };
     io.emit('table-updated', updatedTable);
+  });
+
+  socket.on('reset-all-tables', (data) => {
+    tables.forEach(t => {
+      t.status = 'free';
+      t.order = [];
+      t.mesero = null;
+      t.openedAt = null;
+      t.notes = '';
+      t.tipPercent = 0;
+    });
+    writeJSON(TABLES_FILE, tables);
+
+    // Reiniciar también las cuentas y caja del día
+    sales = [];
+    writeJSON(SALES_FILE, sales);
+
+    const tablesWithTotals = tables.map(t => ({
+      ...t,
+      ...getTableTotal(t.order, t.tipPercent)
+    }));
+
+    io.emit('all-tables-reset', {
+      tables: tablesWithTotals,
+      sales: [],
+      resetBy: (data && data.userName) || 'Camilo'
+    });
   });
 });
 
