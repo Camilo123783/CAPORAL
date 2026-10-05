@@ -1,0 +1,211 @@
+[
+  {
+    "id": "session-1791169317406",
+    "name": "Inicio Limpio",
+    "closedBy": "Sistema",
+    "closedAt": "2026-10-05T03:01:57.406Z",
+    "totalItems": 18,
+    "totalCountedUnits": 1,
+    "itemsWithDiff": 18,
+    "snapshot": [
+      {
+        "id": "prod-1",
+        "name": "Cerveza Corona 355ml",
+        "category": "Cervezas",
+        "unit": "Botella",
+        "currentCount": 1,
+        "expectedStock": 48,
+        "minStock": 12,
+        "lastUpdatedBy": "Robot Pruebas",
+        "lastUpdatedAt": "2026-10-05T03:01:41.778Z"
+      },
+      {
+        "id": "prod-2",
+        "name": "Cerveza Club Colombia Dorada",
+        "category": "Cervezas",
+        "unit": "Botella",
+        "currentCount": 0,
+        "expectedStock": 60,
+        "minStock": 20,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-3",
+        "name": "Cerveza Heineken 330ml",
+        "category": "Cervezas",
+        "unit": "Lata",
+        "currentCount": 0,
+        "expectedStock": 36,
+        "minStock": 10,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-4",
+        "name": "Aguardiente Antioqueño Azul 750ml",
+        "category": "Licores",
+        "unit": "Botella",
+        "currentCount": 0,
+        "expectedStock": 12,
+        "minStock": 3,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-5",
+        "name": "Ron Medellín Añejo 8 Años 750ml",
+        "category": "Licores",
+        "unit": "Botella",
+        "currentCount": 0,
+        "expectedStock": 8,
+        "minStock": 2,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-6",
+        "name": "Whisky Buchanan's Deluxe 12 Años",
+        "category": "Licores",
+        "unit": "Botella",
+        "currentCount": 0,
+        "expectedStock": 6,
+        "minStock": 2,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-7",
+        "name": "Tequila Don Julio Blanco 700ml",
+        "category": "Licores",
+        "unit": "Botella",
+        "currentCount": 0,
+        "expectedStock": 4,
+        "minStock": 1,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-8",
+        "name": "Agua Mineral con Gas 300ml",
+        "category": "Bebidas",
+        "unit": "Botella",
+        "currentCount": 0,
+        "expectedStock": 30,
+        "minStock": 10,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-9",
+        "name": "Coca-Cola Original 400ml",
+        "category": "Bebidas",
+        "unit": "Botella",
+        "currentCount": 0,
+        "expectedStock": 50,
+        "minStock": 15,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-10",
+        "name": "Coca-Cola Zero 400ml",
+        "category": "Bebidas",
+        "unit": "Botella",
+        "currentCount": 0,
+        "expectedStock": 30,
+        "minStock": 8,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-11",
+        "name": "Red Bull Energy Drink 250ml",
+        "category": "Bebidas",
+        "unit": "Lata",
+        "currentCount": 0,
+        "expectedStock": 24,
+        "minStock": 6,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-12",
+        "name": "Lomo de Res Premium (Kg)",
+        "category": "Cocina",
+        "unit": "Kg",
+        "currentCount": 0,
+        "expectedStock": 15,
+        "minStock": 5,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-13",
+        "name": "Pechuga de Pollo Fresca (Kg)",
+        "category": "Cocina",
+        "unit": "Kg",
+        "currentCount": 0,
+        "expectedStock": 20,
+        "minStock": 6,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-14",
+        "name": "Papas Francesas Prefritas (Bolsa 2.5Kg)",
+        "category": "Cocina",
+        "unit": "Bolsa",
+        "currentCount": 0,
+        "expectedStock": 10,
+        "minStock": 3,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-15",
+        "name": "Queso Mozzarella Bloque (Kg)",
+        "category": "Cocina",
+        "unit": "Kg",
+        "currentCount": 0,
+        "expectedStock": 8,
+        "minStock": 2,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-16",
+        "name": "Pan Hamburguesa Brioche (Paq. x 8)",
+        "category": "Insumos",
+        "unit": "Paquete",
+        "currentCount": 0,
+        "expectedStock": 12,
+        "minStock": 4,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-17",
+        "name": "Aceite Vegetal para Freidora (Garrafa 20L)",
+        "category": "Insumos",
+        "unit": "Garrafa",
+        "currentCount": 0,
+        "expectedStock": 4,
+        "minStock": 1,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      },
+      {
+        "id": "prod-18",
+        "name": "Servilletas Restaurante (Paq. x 1000)",
+        "category": "Desechables",
+        "unit": "Paquete",
+        "currentCount": 0,
+        "expectedStock": 6,
+        "minStock": 2,
+        "lastUpdatedBy": "Sistema",
+        "lastUpdatedAt": "2026-10-04T22:00:00.000Z"
+      }
+    ]
+  }
+]

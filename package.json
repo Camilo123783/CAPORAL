@@ -1,0 +1,29 @@
+{
+  "name": "caporal-conteo",
+  "version": "1.0.0",
+  "description": "Sistema móvil en tiempo real para conteo de productos e inventario en restaurante CAPORAL",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "restaurante",
+    "inventario",
+    "conteo",
+    "pwa",
+    "realtime",
+    "mobile"
+  ],
+  "author": "CAPORAL",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "qrcode": "^1.5.3",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "socket.io-client": "^4.8.4"
+  }
+}

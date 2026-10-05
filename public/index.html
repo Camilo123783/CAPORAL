@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>LA FONDA DEL CAPORAL - Comandas y Salones</title>
+  
+  <meta name="theme-color" content="#121826">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="El Caporal">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="phase-almuerzo">
+  <div id="app" class="app-container">
+
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <button id="btnHeaderBack" class="icon-btn back-btn" style="display: none;" title="Volver a mesas">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <div class="brand-group">
+          <div class="brand-badge">🥩</div>
+          <div>
+            <h1 class="brand-title">LA FONDA DEL CAPORAL</h1>
+            <div class="header-sub">
+              <span class="live-dot"></span>
+              <span id="headerTableTitle">Comandas en vivo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <!-- Phase Indicator Pill -->
+        <button id="btnPhaseToggle" class="phase-pill" title="Cambiar fase (Desayuno / Almuerzo)">
+          <span id="phaseIcon">🥩</span>
+          <span id="phaseLabel">Almuerzo</span>
+        </button>
+
+        <!-- User Profile Selector Button -->
+        <button id="btnUserProfile" class="user-pill" title="Cambiar mesero / usuario">
+          <span id="userAvatar">🤠</span>
+          <span id="userNameHeader">Juan</span>
+        </button>
+
+        <!-- QR Connect Button -->
+        <button id="btnOpenQR" class="icon-btn" title="Conectar otro celular">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+        </button>
+
+        <!-- Sales History / Daily Register -->
+        <button id="btnOpenSales" class="icon-btn gold" title="Ventas del día / Caja">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="1" x2="12" y2="23"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Phase Quick Banner (Desayuno vs Almuerzo) -->
+    <div class="phase-strip" id="phaseStrip">
+      <div class="phase-info">
+        <span class="phase-clock" id="currentClock">12:30 PM</span>
+        <span class="phase-schedule-tag" id="phaseScheduleTag">Almuerzo (12:00 PM - 5:00 PM)</span>
+      </div>
+      <button class="phase-switch-quick-btn" id="btnQuickSwitchPhase">Cambiar a Desayuno ☀️</button>
+    </div>
+
+    <!-- VIEW 1: TABLES GRID & SALON SELECTOR -->
+    <main id="viewTables" class="view-section active">
+      
+      <!-- SALON SELECTOR TABS -->
+      <section class="salon-selector-box">
+        <div class="salon-tabs-container">
+          <button class="salon-tab active" data-salon="grande" id="tabSalonGrande">
+            <span class="salon-tab-icon">🏛️</span>
+            <div class="salon-tab-text">
+              <span class="salon-tab-title">Salón Grande</span>
+              <span class="salon-tab-count" id="countSalonGrande">16 Mesas</span>
+            </div>
+          </button>
+
+          <button class="salon-tab" data-salon="pequeño" id="tabSalonPequeno">
+            <span class="salon-tab-icon">🏡</span>
+            <div class="salon-tab-text">
+              <span class="salon-tab-title">Salón Pequeño</span>
+              <span class="salon-tab-count" id="countSalonPequeno">13 Mesas</span>
+            </div>
+          </button>
+        </div>
+
+        <div class="tables-overview-header">
+          <div>
+            <h2 id="activeSalonTitle">Mesas de Salón Grande</h2>
+            <p class="text-xs text-muted" id="activeSalonSub">Mesas ordenadas de menor a mayor</p>
+          </div>
+          <div class="tables-summary-pills">
+            <span class="badge-free" id="countFreeTables">0 Libres</span>
+            <span class="badge-busy" id="countBusyTables">0 Ocupadas</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tables Grid Container -->
+      <div class="tables-grid" id="tablesGrid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </main>
+
+    <!-- VIEW 2: ACTIVE TABLE ORDER & MENU -->
+    <main id="viewOrderDetail" class="view-section" style="display: none;">
+      
+      <!-- Table Summary Sticky Bar -->
+      <div class="table-bill-bar">
+        <div class="table-bill-info">
+          <div class="table-bill-title">
+            <span class="table-tag" id="orderViewTableName">MESA 1</span>
+            <span class="salon-tag-badge" id="orderViewSalonBadge">Salón Grande</span>
+            <span class="mesero-tag" id="orderViewMesero">🤠 Juan</span>
+          </div>
+          <div class="table-bill-total">
+            <span class="total-label">Total Cuenta:</span>
+            <strong class="total-amount text-gold" id="orderViewTotal">$0</strong>
+          </div>
+        </div>
+        <button id="btnCheckoutTable" class="btn-checkout">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          Sacar Cuenta
+        </button>
+      </div>
+
+      <!-- Current Items in Table Order -->
+      <section class="current-order-box">
+        <div class="order-box-header">
+          <h3>Platos y Bebidas Pedidos</h3>
+          <span class="items-count-badge" id="orderItemsCount">0 ítems</span>
+        </div>
+        <div class="order-items-list" id="orderItemsList">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+
+      <!-- Add Products Section from Menu -->
+      <section class="menu-catalog-section">
+        <div class="catalog-header">
+          <h3>Agregar al Pedido</h3>
+          <div class="menu-phase-indicator" id="catalogPhaseBadge">Carta de Almuerzo</div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="menuSearchInput" placeholder="Buscar carne, picada, sopa, bebida, huevos..." autocomplete="off">
+          <button id="btnClearMenuSearch" class="clear-btn" style="display: none;">✕</button>
+        </div>
+
+        <!-- Category Horizontal Tabs -->
+        <div class="menu-categories-scroll" id="menuCategoriesScroll">
+          <!-- Dynamically populated according to active phase -->
+        </div>
+
+        <!-- Menu Products Cards Feed -->
+        <div class="menu-items-grid" id="menuItemsGrid">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+    </main>
+
+    <!-- FLOATING BOTTOM BAR: PRODUCTOS AGOTADOS (SE ACABARON) -->
+    <div class="bottom-panel-bar">
+      <button id="btnOpenOutOfStockPanel" class="btn-out-of-stock-bar">
+        <span class="out-icon">🚫</span>
+        <span class="out-title">Productos Agotados</span>
+        <span class="out-count-badge" id="badgeOutOfStockCount">0</span>
+      </button>
+    </div>
+
+    <!-- Bottom Notification Toast -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- ======================================================================
+         MODALS
+         ====================================================================== -->
+
+    <!-- MODAL: PANEL DE PRODUCTOS AGOTADOS (SE ACABARON) -->
+    <div id="outOfStockModal" class="modal-overlay">
+      <div class="modal-card large">
+        <div class="modal-header">
+          <div>
+            <h3>🚫 Gestión de Productos Agotados</h3>
+            <p class="text-xs text-muted">Marca los platos o bebidas que se acabaron para que salgan grises y nadie los pida</p>
+          </div>
+          <button class="modal-close-btn" id="btnCloseOutOfStockModal">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="search-box mb-3">
+            <input type="text" id="outOfStockSearchInput" placeholder="Buscar producto para agotar/habilitar..." autocomplete="off">
+          </div>
+
+          <div class="out-of-stock-list" id="outOfStockListContainer">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: SACAR LA CUENTA / TICKET DE PAGO -->
+    <div id="checkoutModal" class="modal-overlay">
+      <div class="modal-card receipt-card">
+        <button class="modal-close-btn" id="btnReceiptCloseX" title="Cerrar">✕</button>
+        <div class="receipt-header">
+          <div class="receipt-logo">🥩 LA FONDA DEL CAPORAL 🥩</div>
+          <p class="receipt-sub">Auténtico Sabor Llanero y Tradicional</p>
+          <div class="receipt-divider"></div>
+          <div class="receipt-meta">
+            <div><strong>Mesa:</strong> <span id="receiptTableNum">Mesa 1</span></div>
+            <div><strong>Salón:</strong> <span id="receiptSalon">Grande</span></div>
+            <div><strong>Atendió:</strong> <span id="receiptWaiter">Juan</span></div>
+          </div>
+          <div class="receipt-divider"></div>
+        </div>
+
+        <div class="receipt-body">
+          <table class="receipt-table">
+            <thead>
+              <tr>
+                <th class="text-left">Cant</th>
+                <th class="text-left">Descripción</th>
+                <th class="text-right">Total</th>
+              </tr>
+            </thead>
+            <tbody id="receiptItemsTbody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+
+          <div class="receipt-divider"></div>
+
+          <!-- Total (Sin propina) -->
+          <div class="receipt-totals-rows">
+            <div class="receipt-row grand-total-row">
+              <span>TOTAL DE LA CUENTA:</span>
+              <strong class="receipt-big-total text-gold" id="receiptGrandTotal">$0</strong>
+            </div>
+          </div>
+
+          <!-- Payment Options -->
+          <div class="payment-method-box mt-3">
+            <label>Método de Pago:</label>
+            <div class="payment-options-grid">
+              <button class="pay-opt active" data-method="Efectivo">💵 Efectivo</button>
+              <button class="pay-opt" data-method="Nequi / Daviplata">📱 Nequi / Davi</button>
+              <button class="pay-opt" data-method="Tarjeta">💳 Tarjeta</button>
+            </div>
+          </div>
+
+          <!-- Cash change calculator -->
+          <div class="cash-calc-row mt-2" id="cashCalcRow">
+            <div class="form-group flex-1">
+              <label for="inputReceivedCash">Paga con:</label>
+              <input type="number" id="inputReceivedCash" placeholder="Ej: 50000">
+            </div>
+            <div class="form-group flex-1">
+              <label>Cambio / Vueltos:</label>
+              <div class="cash-change-display" id="displayCashChange">$0</div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="receipt-actions mt-3">
+            <button id="btnShareReceiptWA" class="btn-whatsapp">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.53 7.37C9.37 7.37 9.12 7.43 8.9 7.67C8.68 7.91 8.08 8.47 8.08 9.63C8.08 10.79 8.93 11.9 9.05 12.06C9.17 12.22 10.7 14.58 13.06 15.6C15.02 16.45 15.42 16.28 15.84 16.24C16.26 16.2 17.2 15.69 17.4 15.12C17.6 14.56 17.6 14.07 17.54 13.97C17.48 13.87 17.32 13.81 17.07 13.68C16.82 13.56 15.6 12.96 15.37 12.88C15.15 12.8 14.98 12.75 14.82 13C14.65 13.24 14.18 13.81 14.04 13.97C13.9 14.13 13.75 14.15 13.51 14.03C13.26 13.9 12.22 13.56 10.99 12.46C10.03 11.61 9.39 10.55 9.27 10.35C9.15 10.15 9.26 10.04 9.38 9.92C9.49 9.81 9.63 9.63 9.75 9.49C9.87 9.35 9.92 9.24 10 9.08C10.08 8.92 10.04 8.78 9.98 8.66C9.92 8.54 9.53 7.37 9.53 7.37Z"/>
+              </svg>
+              Enviar Cuenta por WhatsApp
+            </button>
+
+            <button id="btnConfirmPayAndFree" class="btn-primary w-full">
+              ✅ Pagar y Liberar Mesa
+            </button>
+            <button id="btnCloseReceipt" class="btn-secondary w-full">Cerrar sin pagar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: SELECTOR DE PERFIL (5 USUARIOS) -->
+    <div id="userProfileModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Seleccionar Perfil de Usuario</h3>
+          <button class="modal-close-btn" id="btnCloseUserModal">✕</button>
+        </div>
+        <p class="text-sm text-muted mb-3">Elige quién está atendiendo en este celular:</p>
+        <div class="users-selection-list" id="usersSelectionList">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: CONTROL DE FASE (DESAYUNO / ALMUERZO) -->
+    <div id="phaseControlModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Fase del Menú</h3>
+          <button class="modal-close-btn" id="btnClosePhaseModal">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="phase-mode-switch-box">
+            <label class="switch-container">
+              <span>Cambio Automático por Horario</span>
+              <input type="checkbox" id="toggleAutoPhase" checked>
+            </label>
+            <p class="text-xs text-muted mt-1">
+              ☀️ <strong>Desayuno:</strong> 9:00 AM a 12:00 PM<br>
+              🥩 <strong>Almuerzo:</strong> 12:00 PM a 5:00 PM
+            </p>
+          </div>
+
+          <div class="manual-phase-buttons mt-3">
+            <p class="text-sm font-bold mb-2">Selección Manual (Administrador):</p>
+            <div class="form-row">
+              <button class="btn-phase-choice" data-phase="desayuno" id="btnChooseDesayuno">
+                <span class="choice-icon">☕</span>
+                <span class="choice-title">Desayuno</span>
+                <span class="choice-sub">Combos, Huevos, Caldos</span>
+              </button>
+              <button class="btn-phase-choice active" data-phase="almuerzo" id="btnChooseAlmuerzo">
+                <span class="choice-icon">🥩</span>
+                <span class="choice-title">Almuerzo</span>
+                <span class="choice-sub">Llanera, Picadas, Sopas</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: HISTORIAL DE VENTAS Y CAJA -->
+    <div id="salesModal" class="modal-overlay">
+      <div class="modal-card large">
+        <div class="modal-header">
+          <div>
+            <h3>Caja y Ventas del Día</h3>
+            <p class="text-xs text-muted" id="salesDateHeader"></p>
+          </div>
+          <button class="modal-close-btn" id="btnCloseSalesModal">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="sales-stats-grid two-cols">
+            <div class="report-stat-box">
+              <span class="report-stat-num text-gold" id="statSalesTotal">$0</span>
+              <span class="report-stat-label">Total Ventas</span>
+            </div>
+            <div class="report-stat-box">
+              <span class="report-stat-num text-emerald" id="statSalesCount">0</span>
+              <span class="report-stat-label">Cuentas Cobradas</span>
+            </div>
+          </div>
+
+          <h4 class="section-title mt-4">Historial de Cuentas Cerradas</h4>
+          <div class="sales-history-list" id="salesHistoryList">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: CONECTAR CELULAR (QR) -->
+    <div id="qrModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Conectar otro Celular</h3>
+          <button class="modal-close-btn" id="btnCloseQR">✕</button>
+        </div>
+        <div class="modal-body text-center">
+          <p class="text-muted mb-3">Escanea este código con la cámara de otro celular para atender mesas al mismo tiempo:</p>
+          <div class="qr-frame">
+            <img id="qrImage" src="" alt="QR" class="qr-img">
+          </div>
+          <div class="url-copy-box">
+            <input type="text" id="networkUrlInput" readonly value="Cargando...">
+            <button id="btnCopyUrl" class="copy-btn">Copiar</button>
+          </div>
+          <p class="text-xs text-muted mt-2">Ambos celulares deben estar en la misma red Wi-Fi.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

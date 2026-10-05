@@ -1,0 +1,214 @@
+{
+  "desayuno": [
+    {
+      "category": "Combos Desayuno",
+      "items": [
+        { "id": "des-c1", "name": "Desayuno #1", "desc": "Caldo de costilla + Huevos + Chocolate + Pan", "price": 13000 },
+        { "id": "des-c2", "name": "Desayuno #2", "desc": "Caldo de costilla + Huevos + Jugo natural agua + Pan", "price": 14000 },
+        { "id": "des-c3", "name": "Desayuno #3", "desc": "Caldo de costilla + Huevos + Jugo natural leche + Pan", "price": 15000 },
+        { "id": "des-c4", "name": "Desayuno #4", "desc": "Caldo costilla + Huevos + Chocolate + Jugo agua + Pan", "price": 16000 },
+        { "id": "des-c5", "name": "Desayuno #5", "desc": "Caldo costilla + Huevos + Chocolate + Jugo leche + Pan", "price": 17000 }
+      ]
+    },
+    {
+      "category": "Huevos al Gusto",
+      "items": [
+        { "id": "des-h1", "name": "Huevos Pericos", "desc": "Con cebolla y tomate", "price": 6000 },
+        { "id": "des-h2", "name": "Huevos Fritos", "desc": "Fritos al punto", "price": 6000 },
+        { "id": "des-h3", "name": "Huevos en Tortilla", "desc": "Tortilla suave", "price": 6000 },
+        { "id": "des-h4", "name": "Huevos Tibios", "desc": "Huevos tibios", "price": 5000 },
+        { "id": "des-h5", "name": "Huevos Rancheros", "desc": "Con salchicha y maíz", "price": 8000 },
+        { "id": "des-h6", "name": "Huevos con Arroz", "desc": "Huevos acompañados de arroz", "price": 7000 },
+        { "id": "des-h7", "name": "Huevos con Carne", "desc": "Huevos acompañados de carne", "price": 8000 },
+        { "id": "des-h8", "name": "Huevos con Longaniza", "desc": "Huevos con longaniza", "price": 8000 }
+      ]
+    },
+    {
+      "category": "Caldos",
+      "items": [
+        { "id": "des-k1", "name": "Caldo de Costilla", "desc": "Porción de caldo tradicional", "price": 8000 },
+        { "id": "des-k2", "name": "Changua", "desc": "Dos huevos + calado", "price": 7000 }
+      ]
+    },
+    {
+      "category": "Bebidas Calientes",
+      "items": [
+        { "id": "des-b1", "name": "Chocolate en Leche", "desc": "Taza caliente", "price": 4500 },
+        { "id": "des-b2", "name": "Chocolate en Agua", "desc": "Taza caliente", "price": 4000 },
+        { "id": "des-b3", "name": "Café con Leche", "desc": "Taza caliente", "price": 4500 },
+        { "id": "des-b4", "name": "Agua de Panela con Queso", "desc": "Con tajada de queso", "price": 6000 },
+        { "id": "des-b5", "name": "Agua Aromática", "desc": "Hierbas naturales", "price": 4000 },
+        { "id": "des-b6", "name": "Tinto", "desc": "Café negro caliente", "price": 3500 }
+      ]
+    },
+    {
+      "category": "Bebidas Frías",
+      "items": [
+        { "id": "des-bf1", "name": "Jugo de Naranja Pequeño", "desc": "Recién exprimido", "price": 4500 },
+        { "id": "des-bf2", "name": "Jugo de Naranja 14 Oz", "desc": "Vaso grande 14 Oz", "price": 8000 },
+        { "id": "des-bf3", "name": "Crema de Naranja 14 Oz", "desc": "Vaso grande 14 Oz", "price": 8000 }
+      ]
+    },
+    {
+      "category": "Adicionales Desayuno",
+      "items": [
+        { "id": "des-ad1", "name": "Porción de Queso", "desc": "Tajada de queso fresco", "price": 4000 },
+        { "id": "des-ad2", "name": "Porción de Arroz", "desc": "Porción individual", "price": 6000 },
+        { "id": "des-ad3", "name": "Un Pan", "desc": "Pan fresco", "price": 800 },
+        { "id": "des-ad4", "name": "Envuelto", "desc": "Envuelto de maíz", "price": 5500 },
+        { "id": "des-ad5", "name": "Arepa", "desc": "Arepa caliente", "price": 4500 }
+      ]
+    }
+  ],
+  "almuerzo": [
+    {
+      "category": "Sopas",
+      "items": [
+        { "id": "alm-s1", "name": "Sopa del Día (Mute o Pajarilla)", "desc": "Mute o Pajarilla - Sin acompañamiento", "price": 11000 },
+        { "id": "alm-s2", "name": "½ Sopa del Día (Mute o Pajarilla)", "desc": "Mute o Pajarilla - Media porción", "price": 8000 },
+        { "id": "alm-s3", "name": "Mondongo", "desc": "Sin acompañamiento", "price": 12000 },
+        { "id": "alm-s4", "name": "½ Mondongo", "desc": "Media porción", "price": 8000 }
+      ]
+    },
+    {
+      "category": "Carne a la Llanera",
+      "items": [
+        { "id": "alm-ll1", "name": "1 Res 500 gr", "desc": "Papa salada y yuca", "price": 34000 },
+        { "id": "alm-ll2", "name": "½ Res 250 gr", "desc": "Papa salada y yuca", "price": 25000 },
+        { "id": "alm-ll3", "name": "1 Cerdo 500 gr", "desc": "Papa salada y yuca", "price": 36000 },
+        { "id": "alm-ll4", "name": "½ Cerdo 250 gr", "desc": "Papa salada y yuca", "price": 25000 },
+        { "id": "alm-ll5", "name": "1 Mixto 500 gr (½ Res + ½ Cerdo)", "desc": "Papa salada y yuca", "price": 36000 },
+        { "id": "alm-ll6", "name": "Mixta Combinada", "desc": "½ Carne 250gr + ½ Chunchullo + ½ Longaniza", "price": 36000 },
+        { "id": "alm-ll7", "name": "Tres Carnes", "desc": "¼ Pechuga + ¼ Res + ¼ Cerdo + ½ Longaniza + ¼ Plátano", "price": 36000 },
+        { "id": "alm-ll8", "name": "Conejo (1 Pierna + ½ Costilla + Ensalada)", "desc": "Papa salada y yuca", "price": 37000 }
+      ]
+    },
+    {
+      "category": "Carne a la Parrilla",
+      "items": [
+        { "id": "alm-pa1", "name": "1 Lomo de Res 600 gr", "desc": "Papa salada, yuca y ensalada", "price": 38000 },
+        { "id": "alm-pa2", "name": "½ Lomo de Res 300 gr", "desc": "Papa salada, yuca y ensalada", "price": 27000 },
+        { "id": "alm-pa3", "name": "1 Lomo de Cerdo 600 gr", "desc": "Papa salada, yuca y ensalada", "price": 38000 },
+        { "id": "alm-pa4", "name": "½ Lomo de Cerdo 300 gr", "desc": "Papa salada, yuca y ensalada", "price": 27000 },
+        { "id": "alm-pa5", "name": "1 Lomo Mixto 600 gr", "desc": "½ Lomo Res 300gr + Lomo Cerdo 300gr", "price": 38000 }
+      ]
+    },
+    {
+      "category": "Lomos Especiales & Pechugas",
+      "items": [
+        { "id": "alm-lo1", "name": "Lomo Res o Cerdo Hawaiano 600 gr", "desc": "Papa francesa, plátano y ensalada", "price": 41000 },
+        { "id": "alm-lo2", "name": "Lomo Res o Cerdo con Champiñones 600 gr", "desc": "Papa francesa, plátano y ensalada", "price": 41000 },
+        { "id": "alm-pe1", "name": "Pechuga a la Plancha 400 gr", "desc": "Papa francesa, plátano y ensalada", "price": 35000 },
+        { "id": "alm-pe2", "name": "Pechuga Gratinada 400 gr", "desc": "Papa francesa, plátano y ensalada", "price": 39000 },
+        { "id": "alm-pe3", "name": "Pechuga Hawaiana 400 gr", "desc": "Papa francesa, plátano y ensalada", "price": 41000 },
+        { "id": "alm-pe4", "name": "Pechuga con Champiñones 400 gr", "desc": "Papa francesa, plátano y ensalada", "price": 41000 },
+        { "id": "alm-ch1", "name": "Churrasco (corte gordo) 350 gr", "desc": "Papa francesa, plátano y ensalada", "price": 30000 },
+        { "id": "alm-ch2", "name": "Churrasco de Cerdo 350 gr", "desc": "Papa francesa, plátano y ensalada", "price": 30000 }
+      ]
+    },
+    {
+      "category": "Hígados y Riñón",
+      "items": [
+        { "id": "alm-hi1", "name": "1 Hígado 500 gr", "desc": "Papa salada y yuca", "price": 25000 },
+        { "id": "alm-hi2", "name": "½ Hígado 250 gr", "desc": "Papa salada y yuca", "price": 17000 },
+        { "id": "alm-hi3", "name": "1 Hígado Encebollado 500 gr", "desc": "Papa salada y yuca", "price": 27000 },
+        { "id": "alm-hi4", "name": "½ Hígado Encebollado 250 gr", "desc": "Papa salada y yuca", "price": 19000 },
+        { "id": "alm-hi5", "name": "Riñón", "desc": "Papa salada y yuca", "price": 12000 }
+      ]
+    },
+    {
+      "category": "Picadas",
+      "items": [
+        { "id": "alm-pic1", "name": "Picada $60.000 (2 Personas)", "desc": "½ Res, ½ Longaniza, ½ Chunchullo, 1 Rellena, 1 Envuelto, 1 Arepa, Papa+Yuca", "price": 60000 },
+        { "id": "alm-pic2", "name": "Picada $85.000", "desc": "1 Mixta 500gr, ½ Longaniza, ½ Chunchullo, 2 Rellenas, 2 Envueltos, 2 Arepas, Papa+Yuca", "price": 85000 },
+        { "id": "alm-pic3", "name": "Picada $108.000", "desc": "1 Res 500gr, ½ Cerdo 250gr, ½ Longaniza, ½ Chunchullo, 2 Rellenas, 2 Envueltos, 2 Arepas", "price": 108000 },
+        { "id": "alm-pic4", "name": "Picada $147.000", "desc": "1 Res 500gr, 1 Cerdo 500gr, 1 Longaniza, 1 Chunchullo, 3 Rellenas, 2 Envueltos, 3 Arepas", "price": 147000 },
+        { "id": "alm-pic5", "name": "Picada $164.000", "desc": "1 Res 500gr, 1 Cerdo 500gr, 1½ Longaniza, 1 Chunchullo, 3 Rellenas, 3 Envueltos, 4 Arepas", "price": 164000 },
+        { "id": "alm-pic6", "name": "Picada $203.000", "desc": "1½ Res 750gr, 1 Cerdo 500gr, 1½ Longaniza, 1 Chunchullo, 4 Rellenas, 4 Envueltos, 5 Arepas", "price": 203000 },
+        { "id": "alm-pic7", "name": "Picada $219.000", "desc": "3 Mixtas 500gr, 2 Longanizas, 1 Chunchullo, 4 Rellenas, 4 Envueltos, 4 Arepas, Papa+Yuca", "price": 219000 },
+        { "id": "alm-pic8", "name": "Picada $284.000", "desc": "4 Mixtas 500gr, 2 Longanizas, 2 Chunchullos, 5 Rellenas, 5 Envueltos, 5 Arepas, Papa+Yuca", "price": 284000 }
+      ]
+    },
+    {
+      "category": "Pescados",
+      "items": [
+        { "id": "alm-pes1", "name": "Bagre Frito 500 gr", "desc": "Papa francesa, plátano, arroz y ensalada", "price": 36000 },
+        { "id": "alm-pes2", "name": "Bagre en Salsa 500 gr", "desc": "Con papa salada, plátano, arroz y ensalada", "price": 36000 },
+        { "id": "alm-pes3", "name": "Mojarra Frita 500 gr", "desc": "Papa francesa, plátano, arroz y ensalada", "price": 37000 },
+        { "id": "alm-pes4", "name": "Mojarra en Salsa 500 gr", "desc": "Con papa salada, plátano, arroz y ensalada", "price": 37000 },
+        { "id": "alm-pes5", "name": "Mojarra Gratinada 500 gr", "desc": "Papa francesa, plátano, arroz y ensalada", "price": 40000 },
+        { "id": "alm-pes6", "name": "Trucha a la Plancha 500 gr", "desc": "Papa francesa, plátano, arroz y ensalada", "price": 36000 },
+        { "id": "alm-pes7", "name": "Trucha en Salsa 500 gr", "desc": "Con papa salada, plátano, arroz y ensalada", "price": 37000 },
+        { "id": "alm-pes8", "name": "Trucha Gratinada 500 gr", "desc": "Papa francesa, plátano, arroz y ensalada", "price": 39000 },
+        { "id": "alm-pes9", "name": "Trucha Hawaiana 500 gr", "desc": "Papa francesa, plátano, arroz y ensalada", "price": 40000 },
+        { "id": "alm-pes10", "name": "Trucha al Ajillo 500 gr", "desc": "Papa francesa, plátano, arroz y ensalada", "price": 38000 },
+        { "id": "alm-pes11", "name": "Trucha con Champiñones 500 gr", "desc": "Papa francesa, plátano, arroz y ensalada", "price": 40000 }
+      ]
+    },
+    {
+      "category": "Otros Platos & Infantil",
+      "items": [
+        { "id": "alm-ot1", "name": "Lengua en Salsa (4 Tajadas)", "desc": "Papa salada, yuca, plátano, arroz y ensalada", "price": 27000 },
+        { "id": "alm-ot2", "name": "Cocido Boyacense", "desc": "Cola+nabos+rubas+arveja+habas+mazorca+papa+yuca+arroz", "price": 30000 },
+        { "id": "alm-inf1", "name": "Menú Infantil Pechuga", "desc": "¼ Pechuga + ¼ Plátano + Papa francesa + Arroz", "price": 25000 },
+        { "id": "alm-inf2", "name": "Menú Infantil Salchicha", "desc": "Salchicha + Papa francesa + Plátano relleno", "price": 18000 }
+      ]
+    },
+    {
+      "category": "Adicionales",
+      "items": [
+        { "id": "alm-ad1", "name": "1 Longaniza", "desc": "Al horno", "price": 15000 },
+        { "id": "alm-ad2", "name": "1 Chunchullo", "desc": "Al horno", "price": 15000 },
+        { "id": "alm-ad3", "name": "1 Rellena Sola", "desc": "Al horno", "price": 5000 },
+        { "id": "alm-ad4", "name": "1 Rellena con Papa y Yuca", "desc": "Al horno", "price": 9000 },
+        { "id": "alm-ad5", "name": "1 Plátano Asado", "desc": "Al horno", "price": 5500 },
+        { "id": "alm-ad6", "name": "1 Plátano con Queso y Bocadillo", "desc": "Al horno", "price": 10000 },
+        { "id": "alm-ad7", "name": "1 Arepa", "desc": "Al horno", "price": 4000 },
+        { "id": "alm-ad8", "name": "1 Envuelto", "desc": "Al horno", "price": 5000 },
+        { "id": "alm-ad9", "name": "Porción de Arroz", "desc": "Porción", "price": 6000 },
+        { "id": "alm-ad10", "name": "Porción de Papa Salada", "desc": "Porción", "price": 6000 },
+        { "id": "alm-ad11", "name": "Porción de Yuca", "desc": "Porción", "price": 6000 },
+        { "id": "alm-ad12", "name": "Porción de Papa a la Francesa", "desc": "Porción", "price": 7000 },
+        { "id": "alm-ad13", "name": "Porción de Papa Criolla", "desc": "Porción", "price": 7000 },
+        { "id": "alm-ad14", "name": "Porción de Ensalada", "desc": "Porción", "price": 6000 }
+      ]
+    },
+    {
+      "category": "Bebidas & Gaseosas",
+      "items": [
+        { "id": "alm-b1", "name": "Gaseosa 350 ml", "desc": "Botella individual", "price": 3700 },
+        { "id": "alm-b2", "name": "Gaseosa 600 ml", "desc": "Botella personal", "price": 4500 },
+        { "id": "alm-b3", "name": "Gaseosa 1.5 L", "desc": "Botella familiar", "price": 8500 },
+        { "id": "alm-b4", "name": "Cola & Pola 1.5 L", "desc": "Botella familiar", "price": 10000 },
+        { "id": "alm-b5", "name": "Jugo en Caja", "desc": "Cajita personal", "price": 3000 },
+        { "id": "alm-b6", "name": "Mr. Tea 500 ml", "desc": "Té frío", "price": 4500 },
+        { "id": "alm-b7", "name": "Mr. Tea Pequeño 250 ml", "desc": "Té frío personal", "price": 3000 },
+        { "id": "alm-b8", "name": "Gatorade", "desc": "Hidratante", "price": 5000 }
+      ]
+    },
+    {
+      "category": "Cervezas & Licores",
+      "items": [
+        { "id": "alm-cv1", "name": "Águila / Poker", "desc": "Cerveza nacional", "price": 4500 },
+        { "id": "alm-cv2", "name": "Club Colombia", "desc": "Dorada / Roja / Negra", "price": 6000 },
+        { "id": "alm-cv3", "name": "Corona", "desc": "Botella 355ml", "price": 8000 }
+      ]
+    },
+    {
+      "category": "Aguas & Bebidas Naturales",
+      "items": [
+        { "id": "alm-ag1", "name": "Botella de Agua", "desc": "Agua sin gas", "price": 3500 },
+        { "id": "alm-ag2", "name": "Botella de Agua con Gas", "desc": "Agua con gas", "price": 4000 },
+        { "id": "alm-ag3", "name": "Botella de Agua H2OH", "desc": "Agua saborizada", "price": 4000 },
+        { "id": "alm-ag4", "name": "Botella de Agua Pequeña", "desc": "Personal", "price": 2500 },
+        { "id": "alm-bn1", "name": "Jugo en Agua 14 Oz", "desc": "Fruta natural", "price": 7000 },
+        { "id": "alm-bn2", "name": "Jugo en Leche 14 Oz", "desc": "Fruta natural", "price": 8000 },
+        { "id": "alm-bn3", "name": "Limonada Natural 14 Oz", "desc": "Vaso 14 Oz", "price": 6000 },
+        { "id": "alm-bn4", "name": "Jugo de Naranja 14 Oz", "desc": "Natural 14 Oz", "price": 8000 },
+        { "id": "alm-bn5", "name": "Jugo de Mandarina 14 Oz", "desc": "Natural 14 Oz", "price": 8000 },
+        { "id": "alm-ot3", "name": "Zumo de Limón 2 Oz", "desc": "Adicional", "price": 3000 },
+        { "id": "alm-ot4", "name": "Tinto", "desc": "Café caliente", "price": 3000 }
+      ]
+    }
+  ]
+}

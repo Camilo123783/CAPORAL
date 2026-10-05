@@ -1,0 +1,353 @@
+[
+  {
+    "id": 6,
+    "salon": "pequeño",
+    "name": "Mesa 6",
+    "status": "busy",
+    "order": [
+      {
+        "id": "alm-s4",
+        "name": "½ Mondongo",
+        "price": 8000,
+        "qty": 1,
+        "notes": "",
+        "addedBy": "Mesero 1 (Juan)",
+        "addedAt": "2026-10-05T03:48:45.070Z"
+      }
+    ],
+    "mesero": "Mesero 1 (Juan)",
+    "openedAt": "2026-10-05T03:48:45.070Z",
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 7,
+    "salon": "pequeño",
+    "name": "Mesa 7",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 8,
+    "salon": "pequeño",
+    "name": "Mesa 8",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 9,
+    "salon": "pequeño",
+    "name": "Mesa 9",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 10,
+    "salon": "pequeño",
+    "name": "Mesa 10",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 11,
+    "salon": "pequeño",
+    "name": "Mesa 11",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 12,
+    "salon": "pequeño",
+    "name": "Mesa 12",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 13,
+    "salon": "pequeño",
+    "name": "Mesa 13",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 14,
+    "salon": "pequeño",
+    "name": "Mesa 14",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 21,
+    "salon": "pequeño",
+    "name": "Mesa 21",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 22,
+    "salon": "pequeño",
+    "name": "Mesa 22",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 23,
+    "salon": "pequeño",
+    "name": "Mesa 23",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 60,
+    "salon": "pequeño",
+    "name": "Mesa 60",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 1,
+    "salon": "grande",
+    "name": "Mesa 1",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 2,
+    "salon": "grande",
+    "name": "Mesa 2",
+    "status": "busy",
+    "order": [
+      {
+        "id": "alm-s2",
+        "name": "½ Sopa del Día (Mute o Pajarilla)",
+        "price": 8000,
+        "qty": 1,
+        "notes": "",
+        "addedBy": "Camilo",
+        "addedAt": "2026-10-05T04:11:55.228Z"
+      }
+    ],
+    "mesero": "Camilo",
+    "openedAt": "2026-10-05T04:11:55.228Z",
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 3,
+    "salon": "grande",
+    "name": "Mesa 3",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 4,
+    "salon": "grande",
+    "name": "Mesa 4",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 5,
+    "salon": "grande",
+    "name": "Mesa 5",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 15,
+    "salon": "grande",
+    "name": "Mesa 15",
+    "status": "busy",
+    "order": [
+      {
+        "id": "alm-s3",
+        "name": "Mondongo",
+        "price": 12000,
+        "qty": 3,
+        "notes": "",
+        "addedBy": "Mesero 1 (Juan)",
+        "addedAt": "2026-10-05T03:48:30.952Z",
+        "updatedBy": "Mesero 1 (Juan)",
+        "updatedAt": "2026-10-05T03:48:32.409Z"
+      }
+    ],
+    "mesero": "Mesero 1 (Juan)",
+    "openedAt": "2026-10-05T03:48:30.952Z",
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 16,
+    "salon": "grande",
+    "name": "Mesa 16",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 17,
+    "salon": "grande",
+    "name": "Mesa 17",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 18,
+    "salon": "grande",
+    "name": "Mesa 18",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 19,
+    "salon": "grande",
+    "name": "Mesa 19",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 20,
+    "salon": "grande",
+    "name": "Mesa 20",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 24,
+    "salon": "grande",
+    "name": "Mesa 24",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 25,
+    "salon": "grande",
+    "name": "Mesa 25",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 26,
+    "salon": "grande",
+    "name": "Mesa 26",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 69,
+    "salon": "grande",
+    "name": "Mesa 69",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  },
+  {
+    "id": 96,
+    "salon": "grande",
+    "name": "Mesa 96",
+    "status": "free",
+    "order": [],
+    "mesero": null,
+    "openedAt": null,
+    "notes": "",
+    "tipPercent": 0
+  }
+]
